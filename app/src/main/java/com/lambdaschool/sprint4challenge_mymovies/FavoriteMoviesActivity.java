@@ -2,6 +2,7 @@ package com.lambdaschool.sprint4challenge_mymovies;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -45,6 +46,18 @@ public class FavoriteMoviesActivity extends AppCompatActivity {
                     MovieDbDao.deleteMovie(temp.getTitle());
                     tv.setVisibility(View.GONE);
                     return false;
+                }
+            });
+            tv.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    if(temp.getFavorite() == 0) {
+                        temp.setFavorite(1);
+                        tv.setPaintFlags(tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    } else {
+                        temp.setFavorite(0);
+                        tv.setPaintFlags(tv.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                    }
                 }
             });
             favesList.addView(tv);

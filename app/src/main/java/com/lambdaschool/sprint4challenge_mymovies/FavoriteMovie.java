@@ -13,6 +13,10 @@ public class FavoriteMovie {
         this.favorite = favorite;
     }
 
+    public void setFavorite(int favorite) {
+        this.favorite = favorite;
+    }
+
     public FavoriteMovie(String title, String year, int favorite) {
         this.title = title;
         this.year = Integer.parseInt(year.substring(0, 4));
