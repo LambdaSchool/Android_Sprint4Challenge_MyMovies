@@ -1,20 +1,80 @@
 package com.lambdaschool.sprint4challenge_mymovies;
 
-import android.graphics.Bitmap;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ImageView;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieDbDao;
+import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieApiDao;
 import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieOverview;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    Context context;
+    private EditText movieSearch;
+    private LinearLayout movieList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
+        MovieDbDao.initializeInstance(this);
+        movieSearch = findViewById(R.id.search_movies);
+        movieList = findViewById(R.id.movies_list);
+
+        findViewById(R.id.view_favorites_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, FavoriteMoviesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.search_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final ArrayList<MovieOverview> movies = MovieApiDao.searchMovies(movieSearch.getText().toString());
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                movieList.removeAllViews();
+                                for(int i = 0; i < movies.size(); i++){
+                                    final TextView tv = new TextView(context);
+                                    final String title = movies.get(i).getTitle();
+                                    final String releaseDate = movies.get(i).getRelease_date();
+                                    tv.setText(title + " (" + releaseDate + ")");
+                                    tv.setTextSize(20);
+                                    tv.setTextColor(Color.BLACK);
+                                    tv.setOnLongClickListener(new View.OnLongClickListener() {
+                                        @Override
+                                        public boolean onLongClick(View v) {
+                                            FavoriteMovie favoriteMovie = new FavoriteMovie(title, releaseDate, 0);
+                                            MovieDbDao.createFavoriteMovie(favoriteMovie);
+                                            tv.setTextColor(Color.YELLOW);
+                                            return false;
+                                        }
+                                    });
+                                    movieList.addView(tv);
+                                }
+                            }
+                        });
+                    }
+                }).start();
+            }
+        });
+
+
     }
+
 }
