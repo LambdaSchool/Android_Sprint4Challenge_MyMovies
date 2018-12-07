@@ -1,6 +1,14 @@
 package com.lambdaschool.sprint4challenge_mymovies.apiaccess;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+
+import com.lambdaschool.sprint4challenge_mymovies.FavoriteMovie;
+import com.lambdaschool.sprint4challenge_mymovies.MovieDbContract;
+import com.lambdaschool.sprint4challenge_mymovies.MovieDbHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,7 +16,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public final class MovieDbDao {
+public final class MovieApiDao {
     private static final String BASE_URL          = "https://api.themoviedb.org/3";
     private static final String API_KEY_PARAM    = "?api_key=b98f8f717026d85eb364fe4ac55cd214";
     private static final String QUERY_PARAMS    = "&language=en-US&query=%s&page=%d&include_adult=false";
