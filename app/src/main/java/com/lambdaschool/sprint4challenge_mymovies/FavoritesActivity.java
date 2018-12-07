@@ -27,8 +27,11 @@ public class FavoritesActivity extends AppCompatActivity {
         ArrayList<FavoriteMovie> favorites = new ArrayList<>();
         favorites = MoviesSqlDbDao.readFavorites();
         for (FavoriteMovie favorite : favorites) {
-//            new loadFavorites().execute(favorite);
-            //TODO change Async task to return 1 view.
+            String lineItem = String.format("%s (%s)",favorite.getTitle(), favorite.getRelease_date());
+            TextView view = new TextView(context);
+            view.setText(lineItem);
+            view.setTextSize(28);
+            layout.addView(view);
         }
     }
 

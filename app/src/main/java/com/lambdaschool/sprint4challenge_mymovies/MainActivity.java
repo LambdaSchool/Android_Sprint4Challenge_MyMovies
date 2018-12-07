@@ -36,18 +36,18 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, FavoritesActivity.class);
+                startActivity(intent);
             }
         });
 
         findViewById(R.id.button_search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               new getMoviesTask().execute(editText.getText().toString());
+                new getMoviesTask().execute(editText.getText().toString());
             }
         });
     }
-
 
 
     public class getMoviesTask extends AsyncTask<String, Integer, View> {
@@ -72,12 +72,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected View doInBackground(String... strings) {
             ArrayList<MovieOverview> movieOverviews = MovieDbDao.searchMovies(strings[0]);
-            final ArrayList<Integer> favoriteIds = MoviesSqlDbDao.readFavoriteIds();
+            ArrayList<Integer> favoriteIds = MoviesSqlDbDao.readFavoriteIds();
 
             LinearLayout layout = new LinearLayout(context);
             layout.setOrientation(LinearLayout.VERTICAL);
             if (movieOverviews != null) {
-                for (final MovieOverview movie: movieOverviews) {
+                for (final MovieOverview movie : movieOverviews) {
                     final TextView tView = new TextView(context);
                     final String releaseYear = movie.getRelease_date().split("-")[0];
                     String displayText = String.format("%s (%s)", movie.getTitle(), releaseYear);
@@ -92,12 +92,13 @@ public class MainActivity extends AppCompatActivity {
                     tView.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
-                            if (favoriteIds.contains(movie.getId())) {
+                            ArrayList<Integer> ids = MoviesSqlDbDao.readFavoriteIds();
+                            if (ids.contains(movie.getId())) {
                                 tView.setBackgroundColor(getResources().getColor(R.color.colorBlank));
                                 MoviesSqlDbDao.deleteMovie(movie.getId());
                             } else {
                                 tView.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                                FavoriteMovie favoriteMovie = new FavoriteMovie(movie.getId(), movie.getTitle(), movie.getRelease_date());
+                                FavoriteMovie favoriteMovie = new FavoriteMovie(movie.getId(), movie.getTitle(), movie.getRelease_date().split("-")[0]);
                                 MoviesSqlDbDao.createMovie(favoriteMovie);
                             }
                             return false;

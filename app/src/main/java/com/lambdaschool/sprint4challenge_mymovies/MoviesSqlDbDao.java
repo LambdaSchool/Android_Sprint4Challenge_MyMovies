@@ -87,7 +87,7 @@ public class MoviesSqlDbDao {
                 index = cursor.getColumnIndexOrThrow(MoviesSqlDbContract.MovieEntry.COLUMN_NAME_TITLE);
                 String title = cursor.getString(index);
 
-                index = cursor.getColumnIndexOrThrow(MoviesSqlDbContract.MovieEntry.COLUMN_NAME_TITLE);
+                index = cursor.getColumnIndexOrThrow(MoviesSqlDbContract.MovieEntry.COLUMN_NAME_RELEASE_DATE);
                 String release_date = cursor.getString(index);
 
                 movies.add(new FavoriteMovie(id,title,release_date));
