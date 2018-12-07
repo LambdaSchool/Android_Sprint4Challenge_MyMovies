@@ -55,12 +55,13 @@ public class MainActivity extends AppCompatActivity {
                                     final String releaseDate = movies.get(i).getRelease_date();
                                     tv.setText(title + " (" + releaseDate + ")");
                                     tv.setTextSize(20);
+                                    tv.setTextColor(Color.BLACK);
                                     tv.setOnLongClickListener(new View.OnLongClickListener() {
                                         @Override
                                         public boolean onLongClick(View v) {
                                             FavoriteMovie favoriteMovie = new FavoriteMovie(title, releaseDate, 0);
                                             MovieDbDao.createFavoriteMovie(favoriteMovie);
-                                            tv.setBackgroundColor(Color.YELLOW);
+                                            tv.setTextColor(Color.YELLOW);
                                             return false;
                                         }
                                     });
@@ -75,4 +76,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 }
