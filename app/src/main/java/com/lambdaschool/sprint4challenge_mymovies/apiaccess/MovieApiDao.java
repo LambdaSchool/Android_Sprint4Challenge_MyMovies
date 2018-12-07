@@ -1,14 +1,6 @@
 package com.lambdaschool.sprint4challenge_mymovies.apiaccess;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-
-import com.lambdaschool.sprint4challenge_mymovies.FavoriteMovie;
-import com.lambdaschool.sprint4challenge_mymovies.MovieDbContract;
-import com.lambdaschool.sprint4challenge_mymovies.MovieDbHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
