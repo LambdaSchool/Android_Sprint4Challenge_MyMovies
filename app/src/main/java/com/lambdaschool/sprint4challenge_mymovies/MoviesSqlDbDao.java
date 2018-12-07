@@ -97,4 +97,20 @@ public class MoviesSqlDbDao {
         return movies;
     }
 
+    static ArrayList<Integer> readFavoriteIds() {
+        ArrayList<Integer> movieIds = new ArrayList<>();
+        if (db != null) {
+            Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s",
+                    MoviesSqlDbContract.MovieEntry.TABLE_NAME),null   );
+            int index;
+            while (cursor.moveToNext()) {
+                index = cursor.getColumnIndexOrThrow(MoviesSqlDbContract.MovieEntry._ID);
+                int id = cursor.getInt(index);
+                movieIds.add(id);
+            }
+            cursor.close();
+        }
+        return movieIds;
+    }
+
 }

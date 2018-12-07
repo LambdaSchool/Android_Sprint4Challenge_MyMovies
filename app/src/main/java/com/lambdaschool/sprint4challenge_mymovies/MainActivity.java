@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         context = this;
 
+        MoviesSqlDbDao.initializeInstance(context);
+
         editText = findViewById(R.id.edit_search_text);
         parentLayout = findViewById(R.id.parent_layout);
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
@@ -54,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             parentLayout.removeAllViews();
+//            TODO turn on progress bar.  Use circular.
+
 //            progressBar.setVisibility(View.VISIBLE);
 //            progressBar.setMax(25);
         }
@@ -68,11 +72,38 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected View doInBackground(String... strings) {
             ArrayList<MovieOverview> movieOverviews = MovieDbDao.searchMovies(strings[0]);
-            LinearLayout view = new LinearLayout(context);
-            view.setOrientation(LinearLayout.VERTICAL);
+            final ArrayList<Integer> favoriteIds = MoviesSqlDbDao.readFavoriteIds();
+
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.VERTICAL);
             if (movieOverviews != null) {
-                for (int i = 0; i < movieOverviews.size(); i++) {
-                    view.addView(getDefaultTextView(movieOverviews.get(i)));
+                for (final MovieOverview movie: movieOverviews) {
+                    final TextView tView = new TextView(context);
+                    final String releaseYear = movie.getRelease_date().split("-")[0];
+                    String displayText = String.format("%s (%s)", movie.getTitle(), releaseYear);
+                    tView.setText(displayText);
+                    tView.setTextSize(28);
+                    if (favoriteIds.contains(movie.getId())) {
+                        tView.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    } else {
+                        tView.setBackgroundColor(getResources().getColor(R.color.colorBlank));
+                    }
+
+                    tView.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            if (favoriteIds.contains(movie.getId())) {
+                                tView.setBackgroundColor(getResources().getColor(R.color.colorBlank));
+                                MoviesSqlDbDao.deleteMovie(movie.getId());
+                            } else {
+                                tView.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                                FavoriteMovie favoriteMovie = new FavoriteMovie(movie.getId(), movie.getTitle(), movie.getRelease_date());
+                                MoviesSqlDbDao.createMovie(favoriteMovie);
+                            }
+                            return false;
+                        }
+                    });
+                    layout.addView(tView);
 //                    publishProgress(i + 5);
 //                    try {
 //                        Thread.sleep(250);
@@ -82,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            return view;
+            return layout;
         }
 
         @Override
@@ -92,24 +123,4 @@ public class MainActivity extends AppCompatActivity {
 //            progressBar.setProgress(values[0]);
         }
     }
-
-    TextView getDefaultTextView(final MovieOverview movie) {
-        final TextView view = new TextView(context);
-        final String releaseYear = movie.getRelease_date().split("-")[0];
-        String displayText = String.format("%s (%s)", movie.getTitle(), releaseYear);
-        view.setText(displayText);
-        view.setTextSize(28);
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                int id = movie.getId();
-                view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                return false;
-            }
-        });
-        return view;
-    }
-
-
-
 }

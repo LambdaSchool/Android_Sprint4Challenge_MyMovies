@@ -24,10 +24,10 @@ public class FavoritesActivity extends AppCompatActivity {
         context = this;
         layout = findViewById(R.id.parent);
 
-        ArrayList<Integer> favorites = new ArrayList<>();
-        favorites = XkcdDbDao.readFavorites();
-        for (Integer id : favorites) {
-            new loadFavorites().execute(id);
+        ArrayList<FavoriteMovie> favorites = new ArrayList<>();
+        favorites = MoviesSqlDbDao.readFavorites();
+        for (FavoriteMovie favorite : favorites) {
+//            new loadFavorites().execute(favorite);
             //TODO change Async task to return 1 view.
         }
     }
@@ -45,19 +45,20 @@ public class FavoritesActivity extends AppCompatActivity {
 
         @Override
         protected View doInBackground(Integer... integers) {
-            final XkcdComic comic = XkcdDao.getComic(integers[0]);
-            TextView view = new TextView(context);
-            view.setText(comic.getTitle());
-            view.setTextSize(28);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, MainActivity.class);
-                    intent.putExtra(MainActivity.COMIC_KEY, comic.getNum());
-                    startActivity(intent);
-                }
-            });
-            return view;
+//            final XkcdComic comic = XkcdDao.getComic(integers[0]);
+////            TextView view = new TextView(context);
+////            view.setText(comic.getTitle());
+////            view.setTextSize(28);
+////            view.setOnClickListener(new View.OnClickListener() {
+////                @Override
+////                public void onClick(View v) {
+////                    Intent intent = new Intent(context, MainActivity.class);
+////                    intent.putExtra(MainActivity.COMIC_KEY, comic.getNum());
+////                    startActivity(intent);
+////                }
+////            });
+            return null;
+//            return view;
         }
     }
 }
