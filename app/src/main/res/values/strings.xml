@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Sprint4Challenge_MyMovies</string>
+    <string name="search_button_text">Search</string>
+    <string name="view_favorites_button_text">View Favorites</string>
 </resources>
