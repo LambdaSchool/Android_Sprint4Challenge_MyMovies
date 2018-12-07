@@ -59,8 +59,8 @@ public class MovieDbDao {
             String whereClause = String.format("%s = '%s'",
                     MovieDbContract.MovieEntry.COLUMN_NAME_MOVIE_TITLE,
                     title);
-            int affectedRows = db.delete(MovieDbContract.MovieEntry.COLUMN_NAME_MOVIE_TITLE,
-                    title, null);
+            db.delete(MovieDbContract.MovieEntry.TABLE_NAME,
+                    whereClause, null);
 
 
         }

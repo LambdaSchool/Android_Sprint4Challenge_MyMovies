@@ -31,6 +31,11 @@ public class FavoriteMovie {
         return favorite;
     }
 
+    public String getStringYear() {
+        String intAsString = Integer.toString(year);
+        return intAsString;
+    }
+
 
     @Override
     public String toString() {

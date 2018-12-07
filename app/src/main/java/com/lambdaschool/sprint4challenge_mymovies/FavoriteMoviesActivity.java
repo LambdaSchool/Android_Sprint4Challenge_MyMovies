@@ -1,5 +1,6 @@
 package com.lambdaschool.sprint4challenge_mymovies;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ public class FavoriteMoviesActivity extends AppCompatActivity {
     private Context context;
     private LinearLayout favesList;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,13 +25,20 @@ public class FavoriteMoviesActivity extends AppCompatActivity {
         favesList = findViewById(R.id.fave_linear_layout);
 
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         ArrayList<FavoriteMovie> chosenMovies = new ArrayList<>();
         chosenMovies = MovieDbDao.readFaveMovies();
         for (final FavoriteMovie temp : chosenMovies) {
             final TextView tv = new TextView(this);
-            tv.setText(temp.getTitle() +
-                    " (" + temp.getYear()+
-                    ")");
+            String text = temp.getTitle() +
+                    " (" + temp.getStringYear()+
+                    ")";
+            tv.setText(text);
             tv.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -38,12 +47,8 @@ public class FavoriteMoviesActivity extends AppCompatActivity {
                     return false;
                 }
             });
+            favesList.addView(tv);
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
 
 
     }
