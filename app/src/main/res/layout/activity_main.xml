@@ -6,12 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_top"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_anchor="@id/toolbar_top"
+        app:layout_anchorGravity="bottom|end"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_top"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_favorite" />
+
     <EditText
         android:id="@+id/edit_search_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Enter Movie Name"
-        android:inputType="textAutoComplete" />
+        android:inputType="textAutoComplete"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_top" />
 
     <ImageButton
         android:id="@+id/button_search"
@@ -19,7 +42,9 @@
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_search_category_default"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_top" />
+
+
 
     <ScrollView
         android:layout_width="match_parent"

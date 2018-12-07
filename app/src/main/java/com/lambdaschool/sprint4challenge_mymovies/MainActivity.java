@@ -31,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
         editText = findViewById(R.id.edit_search_text);
         parentLayout = findViewById(R.id.parent_layout);
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         findViewById(R.id.button_search).setOnClickListener(new View.OnClickListener() {
             @Override
