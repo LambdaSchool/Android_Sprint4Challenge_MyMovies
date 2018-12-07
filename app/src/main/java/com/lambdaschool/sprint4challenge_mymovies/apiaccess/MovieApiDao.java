@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public final class MovieDbDao {
+public final class MovieApiDao {
     private static final String BASE_URL          = "https://api.themoviedb.org/3";
     private static final String API_KEY_PARAM    = "?api_key=b98f8f717026d85eb364fe4ac55cd214";
     private static final String QUERY_PARAMS    = "&language=en-US&query=%s&page=%d&include_adult=false";
