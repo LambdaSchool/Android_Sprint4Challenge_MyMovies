@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            parentLayout.removeAllViews();
 //            progressBar.setVisibility(View.VISIBLE);
 //            progressBar.setMax(25);
         }
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     TextView getDefaultTextView(final MovieOverview movie) {
-        TextView view = new TextView(context);
+        final TextView view = new TextView(context);
         final String releaseYear = movie.getRelease_date().split("-")[0];
         String displayText = String.format("%s (%s)", movie.getTitle(), releaseYear);
         view.setText(displayText);
@@ -96,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onLongClick(View v) {
                 int id = movie.getId();
+                view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 return false;
             }
         });
