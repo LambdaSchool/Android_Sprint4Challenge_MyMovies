@@ -3,7 +3,7 @@ package com.lambdaschool.sprint4challenge_mymovies;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class FavoriteMovies extends AppCompatActivity {
+public class FavoriteMoviesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
