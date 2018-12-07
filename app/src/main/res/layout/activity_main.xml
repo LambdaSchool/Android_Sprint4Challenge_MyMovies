@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/search_bar">
 
         <LinearLayout
-            android:id="@+id/poke_saved_list"
+            android:id="@+id/movie_searched_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
