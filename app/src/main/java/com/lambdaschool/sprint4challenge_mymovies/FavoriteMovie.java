@@ -30,4 +30,10 @@ public class FavoriteMovie {
     public int getFavorite() {
         return favorite;
     }
+
+
+    @Override
+    public String toString() {
+        return title + " (" + year + ")" ;
+    }
 }

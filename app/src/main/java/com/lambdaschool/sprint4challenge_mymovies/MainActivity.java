@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         context = this;
+        MovieDbDao.initializeInstance(context);
         searchedListLayout = findViewById(R.id.movie_searched_list);
         searchButton = findViewById(R.id.search_button);
         favoriteButton = findViewById(R.id.view_faves_button);
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                                     tv.setText(movie.getTitle() +
                                             " (" + movie.getRelease_date()+
                                             ")");
+
                                     tv.setOnLongClickListener(new View.OnLongClickListener() {
                                         @Override
                                         public boolean onLongClick(View v) {

@@ -35,7 +35,7 @@ public class MovieDbDao {
     }
 
     public static ArrayList<FavoriteMovie> readFaveMovies(){
-        ArrayList<FavoriteMovie> movies = new ArrayList<FavoriteMovie>();
+        ArrayList<FavoriteMovie> movies = new ArrayList<>();
         int i;
         String format = String.format("SELECT * FROM %s;", MovieDbContract.MovieEntry.TABLE_NAME);
         Cursor cursor = db.rawQuery(format, null);
@@ -44,7 +44,7 @@ public class MovieDbDao {
             i = cursor.getColumnIndexOrThrow(MovieDbContract.MovieEntry.COLUMN_NAME_MOVIE_TITLE);
             String title = cursor.getString(i);
             i = cursor.getColumnIndexOrThrow(MovieDbContract.MovieEntry.COLUMN_NAME_MOVIE_YEAR);
-            String year = cursor.getString(i);
+            int year = cursor.getInt(i);
             i = cursor.getColumnIndexOrThrow(MovieDbContract.MovieEntry.COLUMN_NAME_FAVORITE);
             int favorite = cursor.getInt(i);
             FavoriteMovie movie = new FavoriteMovie(title, year, favorite);
@@ -61,6 +61,7 @@ public class MovieDbDao {
                     title);
             int affectedRows = db.delete(MovieDbContract.MovieEntry.COLUMN_NAME_MOVIE_TITLE,
                     title, null);
+
 
         }
     }

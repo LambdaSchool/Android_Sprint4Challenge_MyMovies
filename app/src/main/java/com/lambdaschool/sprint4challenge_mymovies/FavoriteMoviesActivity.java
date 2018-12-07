@@ -25,15 +25,15 @@ public class FavoriteMoviesActivity extends AppCompatActivity {
 
         ArrayList<FavoriteMovie> chosenMovies = new ArrayList<>();
         chosenMovies = MovieDbDao.readFaveMovies();
-        for (FavoriteMovie temp : chosenMovies) {
-            final FavoriteMovie movie = temp;
+        for (final FavoriteMovie temp : chosenMovies) {
             final TextView tv = new TextView(this);
-            tv.setText(movie.toString());
-            tv.setTextSize(22);
+            tv.setText(temp.getTitle() +
+                    " (" + temp.getYear()+
+                    ")");
             tv.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    MovieDbDao.deleteMovie(movie.getTitle());
+                    MovieDbDao.deleteMovie(temp.getTitle());
                     tv.setVisibility(View.GONE);
                     return false;
                 }

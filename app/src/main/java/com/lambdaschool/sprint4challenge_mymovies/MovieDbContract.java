@@ -11,7 +11,7 @@ public class MovieDbContract {
         public static final String COLUMN_NAME_MOVIE_YEAR = "year";
         public static final String COLUMN_NAME_FAVORITE = "favorite";
 
-        public static final String SQL_CREATE_TABLE = "CREAT TABLE " + TABLE_NAME +
+        public static final String SQL_CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
                 " ( " +
                 _ID + "INTEGER PRIMARY KEY," +
                 COLUMN_NAME_MOVIE_TITLE + " TEXT, " +
