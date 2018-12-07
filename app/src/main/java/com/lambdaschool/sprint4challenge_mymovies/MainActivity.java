@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieDbDao;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editText;
     Context context;
     LinearLayout parentLayout;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         MoviesSqlDbDao.initializeInstance(context);
 
         editText = findViewById(R.id.edit_search_text);
+        progressBar = findViewById(R.id.progress_bar);
         parentLayout = findViewById(R.id.parent_layout);
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!editText.getText().toString().equals("")) {
+            new getMoviesTask().execute(editText.getText().toString());
+        }
+
+    }
 
     public class getMoviesTask extends AsyncTask<String, Integer, View> {
 
@@ -56,16 +67,13 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             parentLayout.removeAllViews();
-//            TODO turn on progress bar.  Use circular.
-
-//            progressBar.setVisibility(View.VISIBLE);
-//            progressBar.setMax(25);
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected void onPostExecute(View view) {
             super.onPostExecute(view);
-//            progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
             parentLayout.addView(view);
         }
 
@@ -105,12 +113,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                     layout.addView(tView);
-//                    publishProgress(i + 5);
-//                    try {
-//                        Thread.sleep(250);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
                 }
             }
 
@@ -120,8 +122,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-//            parentLayout.addView(values[0]);
-//            progressBar.setProgress(values[0]);
+            progressBar.setProgress(values[0]);
         }
     }
 }
