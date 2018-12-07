@@ -26,11 +26,19 @@ public class FavoritesActivity extends AppCompatActivity {
 
         ArrayList<FavoriteMovie> favorites = new ArrayList<>();
         favorites = MoviesSqlDbDao.readFavorites();
-        for (FavoriteMovie favorite : favorites) {
+        for (final FavoriteMovie favorite : favorites) {
             String lineItem = String.format("%s (%s)",favorite.getTitle(), favorite.getRelease_date());
-            TextView view = new TextView(context);
+            final TextView view = new TextView(context);
             view.setText(lineItem);
             view.setTextSize(28);
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    MoviesSqlDbDao.deleteMovie(favorite.getId());
+                    view.setText("");
+                    return false;
+                }
+            });
             layout.addView(view);
         }
     }
