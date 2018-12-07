@@ -50,6 +50,8 @@ public class MovieDbDao {
             FavoriteMovie movie = new FavoriteMovie(title, year, favorite);
             movies.add(movie);
         }
+        cursor.close();
+        return movies;
     }
 
     public static void deleteMovie(String title) {
