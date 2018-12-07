@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-public class MoviesDbDao {
+public class MovieDbDao {
 
     private static SQLiteDatabase db;
 

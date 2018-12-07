@@ -1,6 +1,7 @@
 package com.lambdaschool.sprint4challenge_mymovies;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                                         public boolean onLongClick(View v) {
 
                                             FavoriteMovie chosen = new FavoriteMovie(movie.getTitle(), movie.getRelease_date(), 1);
-                                            MoviesDbDao.createFavoriteMovie(chosen);
+                                            MovieDbDao.createFavoriteMovie(chosen);
                                             tv.setBackgroundColor(Color.MAGENTA);
                                             tv.setTextColor(Color.WHITE);
                                             return false;
@@ -77,13 +78,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, FavoriteMoviesActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
-    TextView getDefaultTextView(final String name) {
-        TextView view = new TextView(context);
-        view.setText(name);
-        view.setTextSize(18);
-        return view;
-    }
+
 }
