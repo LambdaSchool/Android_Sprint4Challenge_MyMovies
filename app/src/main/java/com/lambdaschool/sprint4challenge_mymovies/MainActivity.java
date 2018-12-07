@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                                         @Override
                                         public boolean onLongClick(View v) {
 
-                                            FavoriteMovie chosen = new FavoriteMovie(movie.getTitle(), movie.getRelease_date(), 1);
+                                            FavoriteMovie chosen = new FavoriteMovie(movie.getTitle(), movie.getRelease_date(), 0);
                                             MovieDbDao.createFavoriteMovie(chosen);
                                             tv.setBackgroundColor(Color.MAGENTA);
                                             tv.setTextColor(Color.WHITE);
