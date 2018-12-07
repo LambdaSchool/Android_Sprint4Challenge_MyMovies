@@ -12,4 +12,22 @@ public class FavoriteMovie {
         this.year = year;
         this.favorite = favorite;
     }
+
+    public FavoriteMovie(String title, String year, int favorite) {
+        this.title = title;
+        this.year = Integer.parseInt(year.substring(0, 4));
+        this.favorite = favorite;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public int getFavorite() {
+        return favorite;
+    }
 }

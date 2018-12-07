@@ -1,6 +1,7 @@
 package com.lambdaschool.sprint4challenge_mymovies;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -46,17 +47,26 @@ public class MainActivity extends AppCompatActivity {
                         final ArrayList<MovieOverview> movieList =
                                 MovieApiDao.searchMovies(searchBox.getText().toString());
 
-
-
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                for(MovieOverview movie : movieList) {
-
+                                searchedListLayout.removeAllViews();
+                                for(final MovieOverview movie : movieList) {
                                     final TextView tv = new TextView(context);
                                     tv.setText(movie.getTitle() +
                                             " (" + movie.getRelease_date()+
-                                            ")\n");
+                                            ")");
+                                    tv.setOnLongClickListener(new View.OnLongClickListener() {
+                                        @Override
+                                        public boolean onLongClick(View v) {
+
+                                            FavoriteMovie chosen = new FavoriteMovie(movie.getTitle(), movie.getRelease_date(), 1);
+                                            MoviesDbDao.createFavoriteMovie(chosen);
+                                            tv.setBackgroundColor(Color.MAGENTA);
+                                            tv.setTextColor(Color.WHITE);
+                                            return false;
+                                        }
+                                    });
                                     searchedListLayout.addView(tv);
 
                                 }
