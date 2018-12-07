@@ -23,6 +23,7 @@ public class MoviesSqlDbDao {
             values.put(MoviesSqlDbContract.MovieEntry._ID, favoriteMovie.getId());
             values.put(MoviesSqlDbContract.MovieEntry.COLUMN_NAME_TITLE, favoriteMovie.getTitle());
             values.put(MoviesSqlDbContract.MovieEntry.COLUMN_NAME_RELEASE_DATE, favoriteMovie.getRelease_date());
+            values.put(MoviesSqlDbContract.MovieEntry.COLUMN_NAME_WATCHED, 0);
             db.insert(MoviesSqlDbContract.MovieEntry.TABLE_NAME, null, values);
         }
     }
@@ -46,7 +47,10 @@ public class MoviesSqlDbDao {
                 index = cursor.getColumnIndexOrThrow(MoviesSqlDbContract.MovieEntry.COLUMN_NAME_RELEASE_DATE);
                 String release_date = cursor.getString(index);
 
-                favoriteMovie = new FavoriteMovie(id, title, release_date);
+                index = cursor.getColumnIndexOrThrow(MoviesSqlDbContract.MovieEntry.COLUMN_NAME_WATCHED);
+                int watched = cursor.getInt(index);
+
+                favoriteMovie = new FavoriteMovie(id, title, release_date, watched);
             } else {
                 favoriteMovie = null;
             }
@@ -58,7 +62,24 @@ public class MoviesSqlDbDao {
         }
     }
 
-    public static void deleteMovie(int id) {
+    static void updateMovie(FavoriteMovie movie) {
+        if (db != null) {
+            String whereClause = String.format("%s = %s", MoviesSqlDbContract.MovieEntry._ID, movie.getId());
+            final Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s",
+                    MoviesSqlDbContract.MovieEntry.TABLE_NAME,
+                    whereClause),
+                    null);
+            if (cursor.getCount() == 1) {
+                ContentValues values = new ContentValues();
+                values.put(MoviesSqlDbContract.MovieEntry.COLUMN_NAME_WATCHED, movie.getWatched());
+                db.update(MoviesSqlDbContract.MovieEntry.TABLE_NAME, values, whereClause, null);
+            }
+            cursor.close();
+        }
+    }
+
+
+    static void deleteMovie(int id) {
         if (db != null) {
             String whereClause = String.format("%s = '%s'",
                     MoviesSqlDbContract.MovieEntry._ID,
@@ -90,7 +111,10 @@ public class MoviesSqlDbDao {
                 index = cursor.getColumnIndexOrThrow(MoviesSqlDbContract.MovieEntry.COLUMN_NAME_RELEASE_DATE);
                 String release_date = cursor.getString(index);
 
-                movies.add(new FavoriteMovie(id,title,release_date));
+                index = cursor.getColumnIndexOrThrow(MoviesSqlDbContract.MovieEntry.COLUMN_NAME_WATCHED);
+                int watched = cursor.getInt(index);
+
+                movies.add(new FavoriteMovie(id,title,release_date, watched));
             }
             cursor.close();
         }

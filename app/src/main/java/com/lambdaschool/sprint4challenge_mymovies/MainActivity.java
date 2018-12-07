@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                                 MoviesSqlDbDao.deleteMovie(movie.getId());
                             } else {
                                 tView.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                                FavoriteMovie favoriteMovie = new FavoriteMovie(movie.getId(), movie.getTitle(), movie.getRelease_date().split("-")[0]);
+                                FavoriteMovie favoriteMovie = new FavoriteMovie(movie.getId(), movie.getTitle(), movie.getRelease_date().split("-")[0],0);
                                 MoviesSqlDbDao.createMovie(favoriteMovie);
                             }
                             return false;

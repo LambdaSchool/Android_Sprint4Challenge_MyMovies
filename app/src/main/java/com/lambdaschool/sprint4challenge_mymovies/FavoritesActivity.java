@@ -2,6 +2,7 @@ package com.lambdaschool.sprint4challenge_mymovies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,10 +28,31 @@ public class FavoritesActivity extends AppCompatActivity {
         ArrayList<FavoriteMovie> favorites = new ArrayList<>();
         favorites = MoviesSqlDbDao.readFavorites();
         for (final FavoriteMovie favorite : favorites) {
-            String lineItem = String.format("%s (%s)",favorite.getTitle(), favorite.getRelease_date());
+            String lineItem = String.format("%s (%s)", favorite.getTitle(), favorite.getRelease_date());
             final TextView view = new TextView(context);
             view.setText(lineItem);
             view.setTextSize(28);
+            if (favorite.getWatched() == 1) {
+                view.setPaintFlags(view.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            } else {
+                view.setPaintFlags(view.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+            }
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (favorite.getWatched() == 1) {
+                        view.setPaintFlags(view.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+                        favorite.setWatched(0);
+                        MoviesSqlDbDao.updateMovie(favorite);
+                    } else {
+                        view.setPaintFlags(view.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        favorite.setWatched(1);
+                        MoviesSqlDbDao.updateMovie(favorite);
+                    }
+                }
+            });
+
             view.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -40,36 +62,6 @@ public class FavoritesActivity extends AppCompatActivity {
                 }
             });
             layout.addView(view);
-        }
-    }
-
-
-
-
-
-    public class loadFavorites extends AsyncTask<Integer, Integer, View> {
-        @Override
-        protected void onPostExecute(View view) {
-            super.onPostExecute(view);
-            layout.addView(view);
-        }
-
-        @Override
-        protected View doInBackground(Integer... integers) {
-//            final XkcdComic comic = XkcdDao.getComic(integers[0]);
-////            TextView view = new TextView(context);
-////            view.setText(comic.getTitle());
-////            view.setTextSize(28);
-////            view.setOnClickListener(new View.OnClickListener() {
-////                @Override
-////                public void onClick(View v) {
-////                    Intent intent = new Intent(context, MainActivity.class);
-////                    intent.putExtra(MainActivity.COMIC_KEY, comic.getNum());
-////                    startActivity(intent);
-////                }
-////            });
-            return null;
-//            return view;
         }
     }
 }
