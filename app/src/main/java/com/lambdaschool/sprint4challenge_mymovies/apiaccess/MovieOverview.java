@@ -3,7 +3,9 @@ package com.lambdaschool.sprint4challenge_mymovies.apiaccess;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MovieOverview
+import java.io.Serializable;
+
+public class MovieOverview implements Serializable
 {
     private double   vote_average;
     private String   backdrop_path;
