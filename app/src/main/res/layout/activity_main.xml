@@ -22,9 +22,26 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
+    <Button
+        android:id="@+id/search_button2"
+        android:layout_width="90dp"
+        android:layout_height="35dp"
+        android:text="SEARCH"
+
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.181"
+        app:layout_constraintStart_toEndOf="@+id/search_text"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <ScrollView
-        android:layout_width="369dp"
-        android:layout_height="396dp"
+        android:id="@+id/scrollView2"
+        android:layout_width="359dp"
+        android:layout_height="380dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
@@ -35,10 +52,11 @@
         app:layout_constraintTop_toBottomOf="@+id/search_text"
         app:layout_constraintVertical_bias="1.0">
 
-        <TextView
+        <LinearLayout
             android:id="@+id/movie_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_text"
             android:orientation="vertical" />
     </ScrollView>
 

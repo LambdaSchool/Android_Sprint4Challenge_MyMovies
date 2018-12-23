@@ -5,19 +5,11 @@ import org.json.JSONObject;
 
 public class MovieOverview
 {
-    private double   vote_average;
-    private String   backdrop_path;
-    private boolean  adult;
-    private int      id;
-    private String   title;
-    private String   overview;
-    private String   original_language;
-    private String   release_date;
-    private String   original_title;
-    private int      vote_count;
-    private String   poster_path;
-    private boolean  video;
-    private double   popularity;
+    private double   vote_average, popularity;
+    private String   backdrop_path, title, overview, original_language, release_date, original_title,
+                     poster_path;
+    private boolean  adult, video;
+    private int      id, vote_count;
 
     public MovieOverview(JSONObject json) {
         try {
@@ -106,6 +98,7 @@ public class MovieOverview
     public String getTitle() {
         return title;
     }
+
 
     public String getOverview() {
         return overview;
