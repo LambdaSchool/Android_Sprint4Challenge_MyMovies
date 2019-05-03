@@ -68,5 +68,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        favoritesButton = findViewById(R.id.favorites_button);
+        favoritesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, FavoritesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        movieListAdapter.notifyDataSetChanged();
     }
 }
