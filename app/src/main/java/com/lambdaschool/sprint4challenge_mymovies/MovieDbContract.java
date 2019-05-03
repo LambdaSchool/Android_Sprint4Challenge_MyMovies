@@ -16,7 +16,7 @@ public class MovieDbContract {
                 COLUMN_NAME_TITLE + " TEXT, " +
                 COLUMN_NAME_YEAR + " TEXT, " +
                 COLUMN_NAME_IMAGE_SUFFIX + " TEXT, " +
-                COLUMN_NAME_FAVORITE + " INTEGER " +
+                COLUMN_NAME_FAVORITE + " INTEGER, " +
                 COLUMN_NAME_WATCHED + " INTEGER);";
 
         public static final String SQL_DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";

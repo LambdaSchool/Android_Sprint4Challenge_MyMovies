@@ -8,7 +8,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 
 public class MovieDbHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "MovieDatabase.db";
 
     public MovieDbHelper(Context context) {

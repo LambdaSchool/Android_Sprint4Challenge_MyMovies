@@ -1,5 +1,6 @@
 package com.lambdaschool.sprint4challenge_mymovies;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,9 +16,11 @@ import java.util.ArrayList;
 
 public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdapter.ViewHolder> {
     private ArrayList<FavoriteMovie> favoriteMovieArrayList;
+    private Context context;
 
-    public FavoritesListAdapter(ArrayList<FavoriteMovie> favoriteMovieArrayList) {
+    public FavoritesListAdapter(ArrayList<FavoriteMovie> favoriteMovieArrayList, Context context) {
         this.favoriteMovieArrayList = favoriteMovieArrayList;
+        this.context = context;
     }
 
     @NonNull
@@ -30,7 +33,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         FavoriteMovie favoriteMovie = favoriteMovieArrayList.get(i);
 
-        viewHolder.imageView.setImageBitmap(MovieApiDao.getPoster(favoriteMovie.getImageSuffix()));
+        viewHolder.imageView.setImageBitmap(MovieApiDao.getSmallPoster(favoriteMovie.getImageSuffix(), context));
         viewHolder.textView.setText(String.format("%s - %s", favoriteMovie.getYear(), favoriteMovie.getTitle()));
         viewHolder.checkBoxF.setChecked(favoriteMovie.isFavorite());
         viewHolder.checkBoxW.setChecked(favoriteMovie.isWatched());
@@ -64,8 +67,8 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
             viewParent = itemView.findViewById(R.id.recycler_view_parent_layout_favorites);
             imageView = itemView.findViewById(R.id.recycler_view_image_view_favorites);
             textView = itemView.findViewById(R.id.recycler_view_text_view_favorites);
-            checkBoxF =itemView.findViewById(R.id.check_box_main_favorite_favorites);
-            checkBoxW =itemView.findViewById(R.id.check_box_main_watched_favorites);
+            checkBoxF = itemView.findViewById(R.id.check_box_main_favorite_favorites);
+            checkBoxW = itemView.findViewById(R.id.check_box_main_watched_favorites);
         }
     }
 }
