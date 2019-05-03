@@ -54,6 +54,13 @@ public class FavoriteMoviesAdapter extends RecyclerView.Adapter<FavoriteMoviesAd
     }
 
     @Override
+    public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+
+        holder.watchedCheckbox.setOnCheckedChangeListener(null);
+    }
+
+    @Override
     public int getItemCount() {
         return favoriteMovies.size();
     }
