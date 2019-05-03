@@ -5,10 +5,18 @@ public class FavoriteMovie {
     private boolean favorite;
     private boolean watched;
 
+
+
     public FavoriteMovie(String title, boolean favorite, boolean watched) {
         this.title = title;
         this.favorite = favorite;
         this.watched = watched;
+    }
+
+    public FavoriteMovie(String title, int favorite, int watched) {
+        this.title = title;
+        this.favorite = favorite == 1;
+        this.watched = watched == 1;
     }
 
     public FavoriteMovie(String title) {
