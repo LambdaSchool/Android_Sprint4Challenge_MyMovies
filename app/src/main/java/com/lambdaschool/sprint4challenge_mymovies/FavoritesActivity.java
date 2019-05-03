@@ -15,11 +15,13 @@ public class FavoritesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_favorites);
 
 
+        ArrayList<FavoriteMovie> favoriteMovieArrayList = MovieDbSqlDao.readFavoriteMovies();
+
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view_favorites);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        FavoritesListAdapter listActivityAdapter = new FavoritesListAdapter(new ArrayList<FavoriteMovie>(),this);
-        recyclerView.setAdapter(listActivityAdapter);
+        FavoritesListAdapter favoritesListAdapter = new FavoritesListAdapter(favoriteMovieArrayList, this);
+        recyclerView.setAdapter(favoritesListAdapter);
         recyclerView.setHasFixedSize(false);
     }
 }

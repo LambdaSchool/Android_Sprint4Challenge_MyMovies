@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ListAdapter listAdapter = new ListAdapter(favoriteMovieArrayList,this);
+        ListAdapter listAdapter = new ListAdapter(favoriteMovieArrayList, this);
         recyclerView.setAdapter(listAdapter);
         recyclerView.setHasFixedSize(false);
     }

@@ -2,7 +2,7 @@ package com.lambdaschool.sprint4challenge_mymovies.apiaccess;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 
 import com.lambdaschool.sprint4challenge_mymovies.R;
 
@@ -71,8 +71,9 @@ public final class MovieApiDao {
             public void run() {
                 bitmap = NetworkAdapter.getBitmapFromURL(IMAGE_URL + POSTER_SIZES[0] + imagePath);
 
-                if (bitmap == null)
-                    bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher_background); // NULL
+                if (bitmap == null) {
+                    bitmap = ((BitmapDrawable) context.getResources().getDrawable(R.drawable.placeholder)).getBitmap();
+                }
             }
         };
         Thread thread = new Thread(runnable);

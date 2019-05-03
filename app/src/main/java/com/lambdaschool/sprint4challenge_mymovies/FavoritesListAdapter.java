@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,25 +27,31 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_view_element_layout_favorites, viewGroup, false));
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_view_element_layout, viewGroup, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
-        FavoriteMovie favoriteMovie = favoriteMovieArrayList.get(i);
+        final FavoriteMovie favoriteMovie = favoriteMovieArrayList.get(i);
 
         viewHolder.imageView.setImageBitmap(MovieApiDao.getSmallPoster(favoriteMovie.getImageSuffix(), context));
         viewHolder.textView.setText(String.format("%s - %s", favoriteMovie.getYear(), favoriteMovie.getTitle()));
-        viewHolder.checkBoxF.setChecked(favoriteMovie.isFavorite());
+        //viewHolder.checkBoxF.setChecked(favoriteMovie.isFavorite());
         viewHolder.checkBoxW.setChecked(favoriteMovie.isWatched());
+        viewHolder.checkBoxW.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                favoriteMovie.setWatched(isChecked);
+                MovieDbSqlDao.updateFavorite(favoriteMovie);
+            }
+        });
         viewHolder.viewParent.setTag(favoriteMovie.getId());
         viewHolder.viewParent.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                // Delete favorite in SQL
-
-                notifyItemRemoved(viewHolder.getAdapterPosition());
-
+                MovieDbSqlDao.deleteFavorite(favoriteMovie.getId());
+                favoriteMovieArrayList.remove(favoriteMovie);
+                notifyDataSetChanged();//(viewHolder.getAdapterPosition());
                 return true;
             }
         });
@@ -59,16 +66,16 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
         View viewParent;
         ImageView imageView;
         TextView textView;
-        CheckBox checkBoxF;
+        //CheckBox checkBoxF;
         CheckBox checkBoxW;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            viewParent = itemView.findViewById(R.id.recycler_view_parent_layout_favorites);
-            imageView = itemView.findViewById(R.id.recycler_view_image_view_favorites);
-            textView = itemView.findViewById(R.id.recycler_view_text_view_favorites);
-            checkBoxF = itemView.findViewById(R.id.check_box_main_favorite_favorites);
-            checkBoxW = itemView.findViewById(R.id.check_box_main_watched_favorites);
+            viewParent = itemView.findViewById(R.id.recycler_view_parent_layout);
+            imageView = itemView.findViewById(R.id.recycler_view_image_view);
+            textView = itemView.findViewById(R.id.recycler_view_text_view);
+            //checkBoxF = itemView.findViewById(R.id.check_box_main_favorite_favorites);
+            checkBoxW = itemView.findViewById(R.id.check_box_main_favorite);
         }
     }
 }
