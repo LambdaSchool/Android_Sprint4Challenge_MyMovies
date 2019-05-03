@@ -15,7 +15,6 @@ public class MovieDbDao {
             db = helper.getWritableDatabase();
         }
     }
-
     public static void createFavoriteMovie(FavoriteMovie movie){
         if(db != null){
             ContentValues values = new ContentValues();
@@ -25,7 +24,6 @@ public class MovieDbDao {
             db.insertOrThrow(MovieDbContract.MovieEntry.TABLE_NAME, null, values);
         }
     }
-
     public static void deleteMovie(String movieTitle) {
         if (db != null) {
             String whereClause = String.format("%s = '%s'", MovieDbContract.MovieEntry.COLUMN_TITLE,
@@ -33,7 +31,6 @@ public class MovieDbDao {
             int affectedRows = db.delete(MovieDbContract.MovieEntry.TABLE_NAME, whereClause, null);
         }
     }
-
     public static void updateMovieWatched(FavoriteMovie movie){
         if (db != null) {
             String whereClause = String.format("%s = '%s'", MovieDbContract.MovieEntry.COLUMN_TITLE,
@@ -49,7 +46,6 @@ public class MovieDbDao {
             }
         }
     }
-
     public static ArrayList<FavoriteMovie> readFavoriteMovies(){
         String getMovies = String.format("SELECT * FROM %s;", MovieDbContract.MovieEntry.TABLE_NAME);
         Cursor cursor = db.rawQuery(getMovies, null);

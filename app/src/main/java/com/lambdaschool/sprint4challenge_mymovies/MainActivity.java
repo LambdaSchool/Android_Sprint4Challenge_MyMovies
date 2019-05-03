@@ -10,12 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieApiDao;
 import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieOverview;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                       final ArrayList<MovieOverview> movies = MovieApiDao.searchMovies(movieSearch.getText().toString());
 
                      //figured a quick textview creation would be fastest, If I have time will swap out with recyclerView
+                     //TODO: change to recyclerView or master/list detail page with dialog box for overview.
                       runOnUiThread(new Runnable() {
                           @Override
                           public void run() {
@@ -61,10 +58,11 @@ public class MainActivity extends AppCompatActivity {
                                   final String title = movies.get(i).getTitle();
                                   final String releaseDate = movies.get(i).getRelease_date();
                                   final String overview = movies.get(i).getOverview();
+
                                   tv.setText(title + " (" + releaseDate + ")");
                                   tv.setTextColor(Color.BLACK);
                                   tv.setTextSize(25);
-                                   //setting a  click listener for information
+                                   //setting a  click listener for information (will launch intent)
                                     tv.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -72,22 +70,21 @@ public class MainActivity extends AppCompatActivity {
                                             overviewIntent.putExtra("overview", overview);
                                             overviewIntent.putExtra("title",title);
                                             overviewIntent.putExtra("release",releaseDate);
-
                                             startActivity(overviewIntent);
                                         }
                                     });
-                                  //setting an onLongClickListener to add to favorites
+                                  //setting an onLongClickListener to add to favorites ( will also show overview)
+                                  //TODO: interrupt the single click so it doesnt launch activity for adding to list (maybe , not sure if i like it)
                                   tv.setOnLongClickListener(new View.OnLongClickListener() {
                                       @Override
                                       public boolean onLongClick(View v) {
-                                          FavoriteMovie favoriteMovie = new FavoriteMovie(title, releaseDate, 0);
+                                          FavoriteMovie favoriteMovie = new FavoriteMovie(title, releaseDate,overview);
                                           MovieDbDao.createFavoriteMovie(favoriteMovie);
                                           tv.setTextColor(getResources().getColor(android.R.color.holo_blue_dark));
                                           return false;
                                       }
                                   });
                                   movieList.addView(tv);
-
                               }
                           }
                       });
@@ -95,6 +92,5 @@ public class MainActivity extends AppCompatActivity {
                 }).start();
             }
         });
-
     }
 }
