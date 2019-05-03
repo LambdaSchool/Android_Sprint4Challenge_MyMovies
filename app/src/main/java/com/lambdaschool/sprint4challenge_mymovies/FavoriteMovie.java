@@ -11,12 +11,26 @@ public class FavoriteMovie {
         this.watched = watched;
     }
 
+    public FavoriteMovie(String title) {
+        this.title = title;
+        this.favorite = false;
+        this.watched = false;
+    }
+
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getFavorite(){
+        if(favorite){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 
     public boolean isFavorite() {
@@ -29,6 +43,14 @@ public class FavoriteMovie {
 
     public boolean isWatched() {
         return watched;
+    }
+
+    public int getWatched(){
+        if(watched){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 
     public void setWatched(boolean watched) {
