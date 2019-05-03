@@ -1,6 +1,9 @@
 package com.lambdaschool.sprint4challenge_mymovies;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +17,7 @@ public class FavoritesActivity extends AppCompatActivity {
     Context context;
     RecyclerView recyclerView;
     FavoritesListAdapter listAdapter;
+    FavoritesViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,17 @@ public class FavoritesActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(listAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        viewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
+        viewModel.getData().observe(this, new Observer<ArrayList<FavoriteMovie>>() {
+            @Override
+            public void onChanged(@Nullable ArrayList<FavoriteMovie> liveFavorites) {
+                if(liveFavorites != null){
+                    favoriteMovies.clear();
+                    favoriteMovies.addAll(liveFavorites);
+                    listAdapter.notifyDataSetChanged();
+                }
+            }
+        });
 
         new Thread(new Runnable() {
             @Override
@@ -34,8 +49,7 @@ public class FavoritesActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        favoriteMovies.addAll(storedFavorites);
-                        listAdapter.notifyDataSetChanged();
+                        viewModel.updateData(storedFavorites);
                     }
                 });
             }
