@@ -44,6 +44,17 @@ public class FavoritesActivity extends AppCompatActivity {
 			tv.setBackgroundColor(getResources().getColor(R.color.colorAccent));
 		}
 		tv.setText(movie.getTitle());
+		
+		tv.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				MovieSqlDao.deleteMovie(MovieOverviewSearchRepo.getMovieByName(tv.getText().toString()));
+				ll.removeAllViews();
+				loadFavorites();
+				return true;
+			}
+		});
+		
 		tv.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -59,8 +70,6 @@ public class FavoritesActivity extends AppCompatActivity {
 				MovieSqlDao.updateMovie(movie);
 			}
 		});
-		
-
 		
 		return tv;
 	}
