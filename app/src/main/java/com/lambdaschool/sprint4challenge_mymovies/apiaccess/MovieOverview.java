@@ -17,6 +17,7 @@ public class MovieOverview
     private int      vote_count;
     private String   poster_path;
     private boolean  video;
+    private boolean isWatched;
     private double   popularity;
 
     public MovieOverview(JSONObject json) {
@@ -86,7 +87,16 @@ public class MovieOverview
             e.printStackTrace();
         }
     }
-
+    
+    public MovieOverview(int id, String title, int year, String summary, int rating, boolean isWatched) {
+        this.id = id;
+        this.title = title;
+        this.release_date = String.valueOf(year);
+        this.overview = summary;
+        this.vote_average = rating;
+        this.isWatched = isWatched;
+    }
+    
     public double getVote_average() {
         return vote_average;
     }
@@ -105,6 +115,14 @@ public class MovieOverview
 
     public String getTitle() {
         return title;
+    }
+    
+    public Boolean isWatched(){
+        return isWatched;
+    }
+    
+    public void setIsWatched(boolean isWatched){
+        this.isWatched = isWatched;
     }
 
     public String getOverview() {
