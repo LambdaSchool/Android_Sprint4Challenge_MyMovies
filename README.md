@@ -1,3 +1,4 @@
+Spencer Stock
 # Android_Sprint4Challenge_MyMovies
 
 ### Instructions
