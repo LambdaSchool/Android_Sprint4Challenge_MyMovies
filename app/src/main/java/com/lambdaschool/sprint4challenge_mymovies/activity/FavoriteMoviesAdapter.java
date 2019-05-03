@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.lambdaschool.sprint4challenge_mymovies.R;
@@ -17,6 +19,7 @@ public class FavoriteMoviesAdapter extends RecyclerView.Adapter<FavoriteMoviesAd
 
     private ArrayList<FavoriteMovie> favoriteMovies = new ArrayList<>();
     private OnFavoriteMovieDeleteListener onFavoriteMovieDeleteListener;
+    private OnFavoriteMovieIsWatchedChangedListener onFavoriteMovieIsWatchedChangedListener;
 
     @NonNull
     @Override
@@ -35,6 +38,15 @@ public class FavoriteMoviesAdapter extends RecyclerView.Adapter<FavoriteMoviesAd
                 onFavoriteMovieDeleteListener.onDelete(favoriteMovie);
             }
         });
+
+        viewHolder.watchedCheckbox.setChecked(favoriteMovie.isWatched());
+        viewHolder.watchedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                favoriteMovie.setWatched(isChecked);
+                onFavoriteMovieIsWatchedChangedListener.onWatchedChanged(favoriteMovie);
+            }
+        });
     }
 
     @Override
@@ -51,19 +63,29 @@ public class FavoriteMoviesAdapter extends RecyclerView.Adapter<FavoriteMoviesAd
         onFavoriteMovieDeleteListener = l;
     }
 
+    public void setOnFavoriteMovieIsWatchedChangedListener(OnFavoriteMovieIsWatchedChangedListener l) {
+        onFavoriteMovieIsWatchedChangedListener = l;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             titleTextView = itemView.findViewById(R.id.item_favorite_movie_text_title);
             deleteButton = itemView.findViewById(R.id.item_favorite_movie_button_delete);
+            watchedCheckbox = itemView.findViewById(R.id.item_favorite_movie_check_box_watched);
         }
 
         private TextView titleTextView;
         private Button deleteButton;
+        private CheckBox watchedCheckbox;
     }
 
     public interface OnFavoriteMovieDeleteListener {
         void onDelete(FavoriteMovie favoriteMovie);
+    }
+
+    public interface OnFavoriteMovieIsWatchedChangedListener {
+        void onWatchedChanged(FavoriteMovie favoriteMovie);
     }
 }

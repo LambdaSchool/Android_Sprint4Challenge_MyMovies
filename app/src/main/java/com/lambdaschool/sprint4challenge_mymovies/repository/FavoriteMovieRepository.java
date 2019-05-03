@@ -44,4 +44,15 @@ public class FavoriteMovieRepository {
         return favoriteMoviesCache;
     }
 
+    public void setFavoriteMovieIsWatched(long id, boolean isWatched) {
+        favoriteMovieDao.setFavoriteMovieIsWatched(id, isWatched);
+        for (int i = 0; i < favoriteMoviesCache.size(); ++i) {
+            FavoriteMovie favoriteMovie = favoriteMoviesCache.get(i);
+            if (favoriteMovie.getId() == id) {
+                favoriteMovie.setWatched(isWatched);
+                break;
+            }
+        }
+    }
+
 }

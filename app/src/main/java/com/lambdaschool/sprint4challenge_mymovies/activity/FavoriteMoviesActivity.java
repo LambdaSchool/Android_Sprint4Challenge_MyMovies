@@ -36,6 +36,12 @@ public class FavoriteMoviesActivity extends AppCompatActivity {
                 favoriteMoviesViewModel.removeFavoriteMovie(favoriteMovie.getId());
             }
         });
+        favoriteMoviesAdapter.setOnFavoriteMovieIsWatchedChangedListener(new FavoriteMoviesAdapter.OnFavoriteMovieIsWatchedChangedListener() {
+            @Override
+            public void onWatchedChanged(FavoriteMovie favoriteMovie) {
+                favoriteMoviesViewModel.setFavoriteMovieIsWatched(favoriteMovie.getId(), favoriteMovie.isWatched());
+            }
+        });
         favoriteMoviesRecyclerView.setAdapter(favoriteMoviesAdapter);
 
         favoriteMoviesViewModel = ViewModelProviders.of(this).get(FavoriteMoviesViewModel.class);

@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:text="Favorite Movie"
         android:textSize="20sp"
+        android:maxLines="1"
         app:layout_constraintEnd_toStartOf="@+id/item_favorite_movie_button_delete"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,5 +24,13 @@
         android:text="Delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/item_favorite_movie_check_box_watched"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Watched"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_favorite_movie_text_title" />
 
 </android.support.constraint.ConstraintLayout>

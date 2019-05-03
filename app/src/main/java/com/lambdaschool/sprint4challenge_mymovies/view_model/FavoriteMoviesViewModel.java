@@ -35,4 +35,8 @@ public class FavoriteMoviesViewModel extends ViewModel {
         liveData.setValue(repository.removeFavoriteMovie(id));
     }
 
+    public void setFavoriteMovieIsWatched(long id, boolean isWatched) {
+        repository.setFavoriteMovieIsWatched(id, isWatched);
+    }
+
 }

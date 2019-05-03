@@ -18,4 +18,8 @@ public class FavoriteMovieDao {
     public ArrayList<FavoriteMovie> getFavoriteMovies() {
         return FavoriteMovieDbHelper.readFavoriteMovies();
     }
+
+    public void setFavoriteMovieIsWatched(long id, boolean isWatched) {
+        FavoriteMovieDbHelper.updateFavoriteMovieIsWatched(id, isWatched);
+    }
 }

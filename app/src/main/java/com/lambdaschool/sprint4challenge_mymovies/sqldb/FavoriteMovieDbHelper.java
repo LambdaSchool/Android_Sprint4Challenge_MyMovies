@@ -20,7 +20,6 @@ public class FavoriteMovieDbHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(FavoriteMovieDbContract.SQL_CREATE_TABLE);
@@ -73,6 +72,15 @@ public class FavoriteMovieDbHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return favoriteMovies;
+    }
+
+    public static void updateFavoriteMovieIsWatched(long id, boolean isWatched) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(FavoriteMovieDbContract.FavoriteMovieEntry.COLUMN_NAME_IS_WATCHED, isWatched ? 1 : 0);
+
+        String whereClause = FavoriteMovieDbContract.FavoriteMovieEntry._ID + "==" + id;
+
+        sqLiteDatabase.update(FavoriteMovieDbContract.FavoriteMovieEntry.TABLE_NAME, contentValues, whereClause, null);
     }
 
 }
