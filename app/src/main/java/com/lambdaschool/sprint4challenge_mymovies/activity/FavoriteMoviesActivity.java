@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.lambdaschool.sprint4challenge_mymovies.R;
+import com.lambdaschool.sprint4challenge_mymovies.adapter.FavoriteMoviesAdapter;
 import com.lambdaschool.sprint4challenge_mymovies.model.FavoriteMovie;
 import com.lambdaschool.sprint4challenge_mymovies.view_model.FavoriteMoviesViewModel;
 
@@ -24,6 +25,7 @@ public class FavoriteMoviesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_movies);
 
+        // setup recycler view
         RecyclerView favoriteMoviesRecyclerView = findViewById(R.id.activity_favorite_movies_recycler_favorite_movies);
         favoriteMoviesRecyclerView.setHasFixedSize(true);
 
@@ -44,8 +46,8 @@ public class FavoriteMoviesActivity extends AppCompatActivity {
         });
         favoriteMoviesRecyclerView.setAdapter(favoriteMoviesAdapter);
 
+        // initialize favorite movies view model
         favoriteMoviesViewModel = ViewModelProviders.of(this).get(FavoriteMoviesViewModel.class);
-
         favoriteMoviesViewModel.getData().observe(this, new Observer<ArrayList<FavoriteMovie>>() {
             @Override
             public void onChanged(@Nullable ArrayList<FavoriteMovie> favoriteMovies) {

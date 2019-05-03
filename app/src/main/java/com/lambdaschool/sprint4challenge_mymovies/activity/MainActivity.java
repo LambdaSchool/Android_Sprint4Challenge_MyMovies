@@ -1,11 +1,7 @@
 package com.lambdaschool.sprint4challenge_mymovies.activity;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,8 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.lambdaschool.sprint4challenge_mymovies.R;
+import com.lambdaschool.sprint4challenge_mymovies.adapter.SearchedMoviesAdapter;
 import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieApiDao;
 import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieOverview;
 import com.lambdaschool.sprint4challenge_mymovies.model.FavoriteMovie;
@@ -35,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         FavoriteMovieDbHelper.init(this);
 
+        // initialize favorite movies view model
         favoriteMoviesViewModel = ViewModelProviders.of(this).get(FavoriteMoviesViewModel.class);
         favoriteMoviesViewModel.getData();
 
@@ -42,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         Button searchButton = findViewById(R.id.activity_main_button_search);
         Button favoriteMoviesButton = findViewById(R.id.activity_main_button_favorite_movies);
 
+        // setup recycler view
         RecyclerView searchedMoviesRecyclerView = findViewById(R.id.activity_main_recycler_searched_movies);
         searchedMoviesRecyclerView.setHasFixedSize(true);
 
@@ -52,10 +52,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void addFavoriteMovie(MovieOverview movieOverview) {
                 favoriteMoviesViewModel.addFavoriteMovie(new FavoriteMovie(movieOverview.getId(), movieOverview.getTitle(), movieOverview.getPoster_path(), false));
+                Toast toast = Toast.makeText(MainActivity.this, "Added to favorites", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
         searchedMoviesRecyclerView.setAdapter(searchedMoviesAdapter);
 
+        // search movie
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // open favorites activity
         favoriteMoviesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,4 +1,4 @@
-package com.lambdaschool.sprint4challenge_mymovies.activity;
+package com.lambdaschool.sprint4challenge_mymovies.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -35,7 +35,9 @@ public class FavoriteMoviesAdapter extends RecyclerView.Adapter<FavoriteMoviesAd
         viewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onFavoriteMovieDeleteListener.onDelete(favoriteMovie);
+                if (onFavoriteMovieDeleteListener != null) {
+                    onFavoriteMovieDeleteListener.onDelete(favoriteMovie);
+                }
             }
         });
 
@@ -44,7 +46,9 @@ public class FavoriteMoviesAdapter extends RecyclerView.Adapter<FavoriteMoviesAd
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 favoriteMovie.setWatched(isChecked);
-                onFavoriteMovieIsWatchedChangedListener.onWatchedChanged(favoriteMovie);
+                if (onFavoriteMovieIsWatchedChangedListener != null) {
+                    onFavoriteMovieIsWatchedChangedListener.onWatchedChanged(favoriteMovie);
+                }
             }
         });
     }

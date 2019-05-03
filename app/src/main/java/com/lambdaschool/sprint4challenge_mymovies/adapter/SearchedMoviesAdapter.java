@@ -1,4 +1,4 @@
-package com.lambdaschool.sprint4challenge_mymovies.activity;
+package com.lambdaschool.sprint4challenge_mymovies.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lambdaschool.sprint4challenge_mymovies.R;
 import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieOverview;
@@ -24,14 +25,16 @@ public class SearchedMoviesAdapter extends RecyclerView.Adapter<SearchedMoviesAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         final MovieOverview searchedMovie = searchedMovies.get(i);
 
         viewHolder.titleTextView.setText(searchedMovie.getTitle());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onAddFavoriteMovieListener.addFavoriteMovie(searchedMovie);
+                if (onAddFavoriteMovieListener != null) {
+                    onAddFavoriteMovieListener.addFavoriteMovie(searchedMovie);
+                }
             }
         });
 
