@@ -26,4 +26,11 @@ public class MovieOverviewSearchRepo {
 	public static ArrayList<MovieOverview> getMovies(){
 		return movies;
 	}
+	
+	public static void setMoviesFromDb(){
+		if (movies != null) {
+			movies.clear();
+		}
+		movies = MovieSqlDao.getAllMovies();
+	}
 }

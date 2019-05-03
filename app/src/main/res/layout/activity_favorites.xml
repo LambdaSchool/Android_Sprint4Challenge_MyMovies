@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Favorites">
+    tools:context=".FavoritesActivity">
 
     <ScrollView
         android:id="@+id/sv_movie_favorites_list"
@@ -12,6 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/sv_ll_movie_favorites_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></LinearLayout>
 
     </ScrollView>
 

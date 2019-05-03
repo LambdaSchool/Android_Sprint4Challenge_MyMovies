@@ -2,6 +2,7 @@ package com.lambdaschool.sprint4challenge_mymovies;
 
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -19,13 +20,18 @@ public class MovieSqlDao {
 	
 	private static SQLiteDatabase db;
 	
+	public MovieSqlDao(Context context){
+		MovieDbHelper dbHelper = new MovieDbHelper(context);
+		db = dbHelper.getWritableDatabase();
+	}
+	
 	public static void addMovie(MovieOverview movie) {
 		ContentValues values = getContentValues(movie);
 		
 		final long insert = db.insert(MovieDbContract.MovieEntry.TABLE_NAME, null, values);
 	}
 	
-	public void updateMovie(MovieOverview movie) {
+	public static void updateMovie(MovieOverview movie) {
 		int affectedRows = db.update(
 				MovieDbContract.MovieEntry.TABLE_NAME,
 				getContentValues(movie),
@@ -33,7 +39,7 @@ public class MovieSqlDao {
 				new String[]{Integer.toString(movie.getId())});
 	}
 	
-	public void deleteMovie(MovieOverview movie) {
+	public static void deleteMovie(MovieOverview movie) {
 		int affectedRows = db.delete(MovieDbContract.MovieEntry.TABLE_NAME,
 				MovieDbContract.MovieEntry._ID + "=?",
 				new String[]{Integer.toString(movie.getId())});
@@ -42,15 +48,15 @@ public class MovieSqlDao {
 	private static ContentValues getContentValues(MovieOverview movie) {
 		ContentValues values = new ContentValues();
 		
-		loadBitmapString(movie.getPoster_path());
+		//loadBitmapString(movie.getPoster_path());
 		
 		values.put(MovieDbContract.MovieEntry._ID, movie.getId());
 		values.put(MovieDbContract.MovieEntry.COLUMN_NAME_MOVIE_TITLE, movie.getTitle());
 		values.put(MovieDbContract.MovieEntry.COLUMN_NAME_MOVIE_IS_WATCHED, movie.isWatched());
 		values.put(MovieDbContract.MovieEntry.COLUMN_NAME_MOVIE_SUMMARY, movie.getOverview());
-		values.put(MovieDbContract.MovieEntry.COLUMN_NAME_MOVIE_IMAGE, getBitmapString());
+		//values.put(MovieDbContract.MovieEntry.COLUMN_NAME_MOVIE_IMAGE, getBitmapString());
 		values.put(MovieDbContract.MovieEntry.COLUMN_NAME_MOVIE_RATING, movie.getVote_average());
-		values.put(MovieDbContract.MovieEntry.COLUMN_NAME_MOVIE_YEAR, movie.getRelease_date());
+		values.put(MovieDbContract.MovieEntry.COLUMN_NAME_MOVIE_YEAR, Integer.parseInt(movie.getRelease_date().substring(0,4)));
 		return values;
 	}
 	
@@ -83,11 +89,11 @@ public class MovieSqlDao {
 		}).start();
 	}
 	
-	public List<MovieOverview> getAllMovies() {
+	public static ArrayList<MovieOverview> getAllMovies() {
 		final Cursor cursor = db.rawQuery("SELECT * FROM " + MovieDbContract.MovieEntry.TABLE_NAME,
 				new String[]{});
 		
-		List<MovieOverview> rows = new ArrayList<>();
+		ArrayList<MovieOverview> rows = new ArrayList<>();
 		while (cursor.moveToNext()) {
 			rows.add(getMovie(cursor));
 		}
@@ -96,7 +102,7 @@ public class MovieSqlDao {
 		return rows;
 	}
 	
-	private MovieOverview getMovie(Cursor cursor) {
+	private static MovieOverview getMovie(Cursor cursor) {
 		int index;
 		index = cursor.getColumnIndexOrThrow(MovieDbContract.MovieEntry._ID);
 		int id = cursor.getInt(index);

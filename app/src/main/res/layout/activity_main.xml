@@ -15,6 +15,12 @@
         app:layout_constraintTop_toBottomOf="@id/et_search_field"
         app:layout_constraintBottom_toTopOf="@id/btn_favorites">
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/sv_ll_movie_result_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></LinearLayout>
+
 
     </ScrollView>
 
