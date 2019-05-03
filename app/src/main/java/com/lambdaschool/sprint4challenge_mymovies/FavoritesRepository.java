@@ -2,7 +2,6 @@ package com.lambdaschool.sprint4challenge_mymovies;
 
 import android.arch.lifecycle.MutableLiveData;
 
-import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieOverview;
 
 import java.util.ArrayList;
 
