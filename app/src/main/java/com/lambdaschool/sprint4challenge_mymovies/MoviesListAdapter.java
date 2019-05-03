@@ -1,5 +1,6 @@
 package com.lambdaschool.sprint4challenge_mymovies;
 
+import android.graphics.Color;
 import android.graphics.Movie;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -28,10 +29,23 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        MovieOverview data = dataList.get(i);
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
+        final MovieOverview data = dataList.get(i);
 
         viewHolder.textTitle.setText(data.getTitle());
+
+        viewHolder.parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewHolder.parent.setBackgroundColor(Color.CYAN);
+                MoviesDbDAO.InitializeInstance(viewHolder.parent.getContext());
+                if(MoviesDbDAO.getFavoriteByTitle(data.getTitle()) == null){
+                    FavoriteMovie favoriteMovie = new FavoriteMovie(data.getTitle(), 1, 0);
+                    MoviesDbDAO.AddFavorite(favoriteMovie);
+                }
+
+            }
+        });
     }
 
     @Override

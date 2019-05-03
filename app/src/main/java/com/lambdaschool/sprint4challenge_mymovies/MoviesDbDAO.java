@@ -3,6 +3,7 @@ package com.lambdaschool.sprint4challenge_mymovies;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
@@ -25,6 +26,32 @@ public class MoviesDbDAO {
             values.put(MoviesDbContract.FavoriteEntry.COLUMN_NAME_WATCHED, movie.getWatched());
 
             long resultId = db.insert(MoviesDbContract.FavoriteEntry.TABLE_NAME, null, values);
+        }
+    }
+
+    public static FavoriteMovie getFavoriteByTitle(String title){
+        if(db != null){
+            Cursor cursor = db.rawQuery("SELECT * FROM " + MoviesDbContract.FavoriteEntry.TABLE_NAME +  " WHERE " +
+                    MoviesDbContract.FavoriteEntry.COLUMN_NAME_TITLE + " =?", new String[]{title});
+            int index = 0;
+            cursor.moveToFirst();
+            try{
+                index = cursor.getColumnIndexOrThrow(MoviesDbContract.FavoriteEntry.COLUMN_NAME_TITLE);
+                String recievedTitle = cursor.getString(index);
+
+                index = cursor.getColumnIndexOrThrow(MoviesDbContract.FavoriteEntry.COLUMN_NAME_WATCHED);
+                int recievedWatched = cursor.getInt(index);
+
+                index = cursor.getColumnIndexOrThrow(MoviesDbContract.FavoriteEntry.COLUMN_NAME_FAVORITE);
+                int recievedFavorite = cursor.getInt(index);
+
+                FavoriteMovie movie = new FavoriteMovie(recievedTitle, recievedFavorite, recievedWatched);
+                return movie;
+            }catch (CursorIndexOutOfBoundsException e){
+                return null;
+            }
+        }else{
+            return null;
         }
     }
 
