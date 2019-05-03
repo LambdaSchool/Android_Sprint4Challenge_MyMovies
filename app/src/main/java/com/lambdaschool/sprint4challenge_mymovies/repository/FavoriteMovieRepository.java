@@ -31,4 +31,17 @@ public class FavoriteMovieRepository {
         return favoriteMoviesCache;
     }
 
+    public ArrayList<FavoriteMovie> removeFavoriteMovie(long id) {
+        favoriteMovieDao.removeFavoriteMovie(id);
+        for (int i = 0; i < favoriteMoviesCache.size(); ++i) {
+            FavoriteMovie favoriteMovie = favoriteMoviesCache.get(i);
+            if (favoriteMovie.getId() == id) {
+                favoriteMoviesCache.remove(i);
+                break;
+            }
+        }
+
+        return favoriteMoviesCache;
+    }
+
 }

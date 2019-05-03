@@ -18,6 +18,7 @@ import com.lambdaschool.sprint4challenge_mymovies.R;
 import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieApiDao;
 import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieOverview;
 import com.lambdaschool.sprint4challenge_mymovies.model.FavoriteMovie;
+import com.lambdaschool.sprint4challenge_mymovies.sqldb.FavoriteMovieDbHelper;
 import com.lambdaschool.sprint4challenge_mymovies.view_model.FavoriteMoviesViewModel;
 
 import java.util.ArrayList;
@@ -32,7 +33,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FavoriteMovieDbHelper.init(this);
+
         favoriteMoviesViewModel = ViewModelProviders.of(this).get(FavoriteMoviesViewModel.class);
+        favoriteMoviesViewModel.getData();
 
         final EditText searchEditText = findViewById(R.id.activity_main_edit_text_search);
         Button searchButton = findViewById(R.id.activity_main_button_search);
@@ -81,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        // TODO refresh repo cache when this is resumed
     }
 
 

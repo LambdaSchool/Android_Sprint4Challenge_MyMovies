@@ -11,8 +11,8 @@ public class FavoriteMovieDao {
         FavoriteMovieDbHelper.createFavoriteMovie(favoriteMovie);
     }
 
-    public void removeFavoriteMovie(FavoriteMovie favoriteMovie) {
-        FavoriteMovieDbHelper.deleteFavoriteMovie(favoriteMovie.getId());
+    public void removeFavoriteMovie(long id) {
+        FavoriteMovieDbHelper.deleteFavoriteMovie(id);
     }
 
     public ArrayList<FavoriteMovie> getFavoriteMovies() {
