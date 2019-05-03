@@ -31,6 +31,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         final MovieOverview data = dataList.get(i);
+        viewHolder.parent.setBackgroundColor(Color.WHITE);
 
         viewHolder.textTitle.setText(data.getTitle());
 

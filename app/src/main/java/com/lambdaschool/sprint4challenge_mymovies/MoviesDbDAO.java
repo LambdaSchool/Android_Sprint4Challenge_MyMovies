@@ -87,7 +87,7 @@ public class MoviesDbDAO {
             values.put(MoviesDbContract.FavoriteEntry.COLUMN_NAME_FAVORITE, movie.getFavorite());
             values.put(MoviesDbContract.FavoriteEntry.COLUMN_NAME_TITLE, movie.getTitle());
 
-            String whereClause = "WHERE " + MoviesDbContract.FavoriteEntry.COLUMN_NAME_TITLE + " =?";
+            String whereClause =MoviesDbContract.FavoriteEntry.COLUMN_NAME_TITLE + " =?";
             String[] whereArgs = new String[]{movie.getTitle()};
 
             db.update(MoviesDbContract.FavoriteEntry.TABLE_NAME, values, whereClause, whereArgs);
@@ -96,7 +96,7 @@ public class MoviesDbDAO {
 
     public static void deleteFavorite(FavoriteMovie movie){
         if(db != null){
-            String whereClause = " WHERE " + MoviesDbContract.FavoriteEntry.COLUMN_NAME_TITLE + " =?";
+            String whereClause =MoviesDbContract.FavoriteEntry.COLUMN_NAME_TITLE + " =?";
             String[] whereArgs = new String[]{movie.getTitle()};
 
             db.delete(MoviesDbContract.FavoriteEntry.TABLE_NAME, whereClause, whereArgs);

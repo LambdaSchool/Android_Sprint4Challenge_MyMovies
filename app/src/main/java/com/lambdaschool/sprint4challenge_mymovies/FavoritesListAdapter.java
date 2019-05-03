@@ -1,5 +1,6 @@
 package com.lambdaschool.sprint4challenge_mymovies;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -28,21 +29,41 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
     @Override
     public void onBindViewHolder(@NonNull final FavoritesListAdapter.ViewHolder viewHolder, int i) {
         final FavoriteMovie data = dataList.get(i);
+        viewHolder.parent.setBackgroundColor(Color.WHITE);
 
         viewHolder.textTitle.setText(data.getTitle());
+        if(data.isWatched()) {
+            viewHolder.parent.setBackgroundColor(Color.CYAN);
+        }
 
-/*        viewHolder.parent.setOnClickListener(new View.OnClickListener() {
+        viewHolder.parent.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                MoviesDbDAO.deleteFavorite(data);
+                dataList.remove(data);
+
+                notifyDataSetChanged();
+
+                return true;
+            }
+        });
+
+
+        viewHolder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewHolder.parent.setBackgroundColor(Color.CYAN);
                 MoviesDbDAO.InitializeInstance(viewHolder.parent.getContext());
-                if(MoviesDbDAO.getFavoriteByTitle(data.getTitle()) == null){
-                    FavoriteMovie favoriteMovie = new FavoriteMovie(data.getTitle(), 1, 0);
-                    MoviesDbDAO.AddFavorite(favoriteMovie);
+                if(!data.isWatched()) {
+                    viewHolder.parent.setBackgroundColor(Color.CYAN);
+                    data.setWatched(true);
+                }else{
+                    viewHolder.parent.setBackgroundColor(Color.WHITE);
+                    data.setWatched(false);
                 }
+                MoviesDbDAO.updateFavorite(data);
 
             }
-        });*/
+        });
     }
 
     @Override
