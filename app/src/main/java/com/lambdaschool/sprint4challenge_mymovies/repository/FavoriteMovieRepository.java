@@ -10,18 +10,25 @@ import java.util.ArrayList;
 public class FavoriteMovieRepository {
 
     private FavoriteMovieDao favoriteMovieDao;
-    private ArrayList<FavoriteMovie> favoriteMovies;
+    private ArrayList<FavoriteMovie> favoriteMoviesCache;
 
     public FavoriteMovieRepository() {
         favoriteMovieDao = new FavoriteMovieDao();
     }
 
     public MutableLiveData<ArrayList<FavoriteMovie>> getData() {
-        favoriteMovies = favoriteMovieDao.getFavoriteMovies();
+        favoriteMoviesCache = favoriteMovieDao.getFavoriteMovies();
         MutableLiveData<ArrayList<FavoriteMovie>> liveData = new MutableLiveData<>();
 
-        liveData.setValue(favoriteMovies);
+        liveData.setValue(favoriteMoviesCache);
         return liveData;
+    }
+
+    public ArrayList<FavoriteMovie> addFavoriteMovie(FavoriteMovie favoriteMovie) {
+        favoriteMovieDao.addFavoriteMovie(favoriteMovie);
+        favoriteMoviesCache.add(favoriteMovie);
+
+        return favoriteMoviesCache;
     }
 
 }

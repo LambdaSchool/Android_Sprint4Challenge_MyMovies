@@ -27,4 +27,8 @@ public class FavoriteMoviesViewModel extends ViewModel {
         liveData = repository.getData();
     }
 
+    public void addFavoriteMovie(FavoriteMovie favoriteMovie) {
+        liveData.setValue(repository.addFavoriteMovie(favoriteMovie));
+    }
+
 }
