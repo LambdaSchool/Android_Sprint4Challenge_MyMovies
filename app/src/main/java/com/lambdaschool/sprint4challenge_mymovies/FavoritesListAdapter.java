@@ -2,6 +2,7 @@ package com.lambdaschool.sprint4challenge_mymovies;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +64,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout parent;
+        CardView parent;
         TextView movieName;
         TextView movieYear;
         CheckBox watchedBox;
