@@ -29,10 +29,14 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
     public void onBindViewHolder(@NonNull final FavoritesListAdapter.ViewHolder viewHolder, int i) {
         final FavoriteMovie data = dataList.get(i);
         viewHolder.textTitle.setText(data.getTitle());
+
+        //check if watched, if so, set checkbox
         if(data.isWatched()) {
             viewHolder.watched.setChecked(true);
         }
 
+
+        //long click to remove from favorites
         viewHolder.parent.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -46,6 +50,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
         });
 
 
+        //click to toggle watched
         viewHolder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

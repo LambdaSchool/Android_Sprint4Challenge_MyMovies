@@ -29,6 +29,8 @@ public class MoviesDbDAO {
         }
     }
 
+
+
     public static FavoriteMovie getFavoriteByTitle(String title){
         if(db != null){
             Cursor cursor = db.rawQuery("SELECT * FROM " + MoviesDbContract.FavoriteEntry.TABLE_NAME +  " WHERE " +
@@ -55,6 +57,8 @@ public class MoviesDbDAO {
         }
     }
 
+
+
     public static ArrayList<FavoriteMovie> getAllFavorites(){
         if(db != null){
             Cursor cursor = db.rawQuery("SELECT * FROM " + MoviesDbContract.FavoriteEntry.TABLE_NAME, null);
@@ -80,6 +84,8 @@ public class MoviesDbDAO {
         }
     }
 
+
+
     public static void updateFavorite(FavoriteMovie movie){
         if(db != null){
             ContentValues values = new ContentValues();
@@ -93,6 +99,8 @@ public class MoviesDbDAO {
             db.update(MoviesDbContract.FavoriteEntry.TABLE_NAME, values, whereClause, whereArgs);
         }
     }
+
+
 
     public static void deleteFavorite(FavoriteMovie movie){
         if(db != null){

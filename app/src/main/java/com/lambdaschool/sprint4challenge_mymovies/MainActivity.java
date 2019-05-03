@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(listAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+
+        //set observer
         viewModel = ViewModelProviders.of(this).get(MoviesViewModel.class);
         viewModel.getData().observe(this, new Observer<ArrayList<MovieOverview>>() {
             @Override
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 final String searchQuery = editSearch.getText().toString();
                 progressBar.setVisibility(View.VISIBLE);
 
+                //new thread to perform search
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -83,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //goto favorites page
         buttonFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

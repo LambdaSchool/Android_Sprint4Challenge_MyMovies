@@ -29,6 +29,8 @@ public class FavoritesActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(listAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        //set observer
         viewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
         viewModel.getData().observe(this, new Observer<ArrayList<FavoriteMovie>>() {
             @Override
@@ -41,6 +43,8 @@ public class FavoritesActivity extends AppCompatActivity {
             }
         });
 
+
+        //Thread to get initial list of favorites
         new Thread(new Runnable() {
             @Override
             public void run() {

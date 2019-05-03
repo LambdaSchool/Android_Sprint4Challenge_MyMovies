@@ -31,6 +31,9 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         final MovieOverview data = dataList.get(i);
         MoviesDbDAO.InitializeInstance(viewHolder.parent.getContext());
+
+
+        //check if movie is in DB, if so, set checkbox accordingly
         FavoriteMovie favoriteMovie = MoviesDbDAO.getFavoriteByTitle(data.getTitle());
         if(favoriteMovie != null){
             if(favoriteMovie.isFavorite()) {
@@ -45,18 +48,23 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
         viewHolder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //double check favorite as initial could now be wrong if multiple clicks
                 FavoriteMovie doubleCheckFavorite = MoviesDbDAO.getFavoriteByTitle(data.getTitle());
                 if (doubleCheckFavorite == null || !doubleCheckFavorite.isFavorite()) {
                     viewHolder.favorite.setChecked(true);
-                    if(doubleCheckFavorite == null) {
 
+                    //handle create new entry
+                    if(doubleCheckFavorite == null) {
                         FavoriteMovie newFavorite = new FavoriteMovie(data.getTitle(), 1, 0);
                         MoviesDbDAO.AddFavorite(newFavorite);
                     }else{
+                        //handle update entry to set favorite
                         doubleCheckFavorite.setFavorite(true);
                         MoviesDbDAO.updateFavorite(doubleCheckFavorite);
                     }
                 } else{
+                    //handle update entry to remove favorite
                     viewHolder.favorite.setChecked(false);
                     doubleCheckFavorite.setFavorite(false);
                     MoviesDbDAO.updateFavorite(doubleCheckFavorite);

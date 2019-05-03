@@ -13,6 +13,8 @@ public class FavoriteMovie {
         this.watched = watched;
     }
 
+    //contructor to be compatible with SQL DB
+
     public FavoriteMovie(String title, int favorite, int watched) {
         this.title = title;
         this.favorite = favorite == 1;
@@ -33,6 +35,8 @@ public class FavoriteMovie {
         this.title = title;
     }
 
+
+    //convert bool to int for DB
     public int getFavorite(){
         if(favorite){
             return 1;
@@ -53,6 +57,7 @@ public class FavoriteMovie {
         return watched;
     }
 
+    //convert bool to int for DB
     public int getWatched(){
         if(watched){
             return 1;
