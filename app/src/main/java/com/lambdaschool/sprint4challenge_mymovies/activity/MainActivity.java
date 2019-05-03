@@ -1,7 +1,9 @@
-package com.lambdaschool.sprint4challenge_mymovies;
+package com.lambdaschool.sprint4challenge_mymovies.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.lambdaschool.sprint4challenge_mymovies.R;
 
 public class MainActivity extends AppCompatActivity {
 
