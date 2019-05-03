@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class MovieDbHelper extends SQLiteOpenHelper {
 
-    private static final int version = 1;
+    private static final int version = 3;
 
-    public MovieDbHelper(Context context) {
+    MovieDbHelper(Context context) {
         super (context, MovieDbContract.TABLE_NAME, null, version);
     }
 
