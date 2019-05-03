@@ -51,7 +51,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
             public boolean onLongClick(View v) {
                 MovieDbSqlDao.deleteFavorite(favoriteMovie.getId());
                 favoriteMovieArrayList.remove(favoriteMovie);
-                notifyDataSetChanged();//(viewHolder.getAdapterPosition());
+                notifyDataSetChanged();
                 return true;
             }
         });
