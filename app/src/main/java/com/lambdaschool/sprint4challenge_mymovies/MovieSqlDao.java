@@ -117,9 +117,6 @@ public class MovieSqlDao {
 		index = cursor.getColumnIndexOrThrow(MovieDbContract.MovieEntry.COLUMN_NAME_MOVIE_YEAR);
 		int year = cursor.getInt(index);
 		
-		
-		
-		
 		return new MovieOverview(id, title, year, summary, rating, isWatched);
 	}
 
