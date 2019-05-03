@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void addFavoriteMovie(MovieOverview movieOverview) {
                 favoriteMoviesViewModel.addFavoriteMovie(new FavoriteMovie(movieOverview.getId(), movieOverview.getTitle(), movieOverview.getPoster_path(), false));
+                searchedMoviesAdapter.setFavoriteMovies(favoriteMoviesViewModel.refresh());
                 Toast toast = Toast.makeText(MainActivity.this, "Added to favorites", Toast.LENGTH_SHORT);
                 toast.show();
             }
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 searchedMoviesAdapter.setSearchedMovies(searchedMovies);
+                                searchedMoviesAdapter.setFavoriteMovies(favoriteMoviesViewModel.getData().getValue());
                             }
                         });
                     }
@@ -94,4 +96,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        searchedMoviesAdapter.setFavoriteMovies(favoriteMoviesViewModel.refresh());
+    }
 }

@@ -39,4 +39,10 @@ public class FavoriteMoviesViewModel extends ViewModel {
         repository.setFavoriteMovieIsWatched(id, isWatched);
     }
 
+    public ArrayList<FavoriteMovie> refresh() {
+        liveData.setValue(repository.refresh());
+
+        return liveData.getValue();
+    }
+
 }

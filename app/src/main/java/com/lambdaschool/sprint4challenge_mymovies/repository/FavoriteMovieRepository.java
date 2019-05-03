@@ -55,4 +55,10 @@ public class FavoriteMovieRepository {
         }
     }
 
+    public ArrayList<FavoriteMovie> refresh() {
+        favoriteMoviesCache = favoriteMovieDao.getFavoriteMovies();
+
+        return favoriteMoviesCache;
+    }
+
 }
