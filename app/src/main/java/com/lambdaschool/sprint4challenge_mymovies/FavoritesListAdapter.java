@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,18 +23,16 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
     @NonNull
     @Override
     public FavoritesListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.movies_item_view, viewGroup, false);
+        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.favorites_item_view, viewGroup, false);
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final FavoritesListAdapter.ViewHolder viewHolder, int i) {
         final FavoriteMovie data = dataList.get(i);
-        viewHolder.parent.setBackgroundColor(Color.WHITE);
-
         viewHolder.textTitle.setText(data.getTitle());
         if(data.isWatched()) {
-            viewHolder.parent.setBackgroundColor(Color.CYAN);
+            viewHolder.watched.setChecked(true);
         }
 
         viewHolder.parent.setOnLongClickListener(new View.OnLongClickListener() {
@@ -54,10 +53,10 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
             public void onClick(View v) {
                 MoviesDbDAO.InitializeInstance(viewHolder.parent.getContext());
                 if(!data.isWatched()) {
-                    viewHolder.parent.setBackgroundColor(Color.CYAN);
+                    viewHolder.watched.setChecked(true);
                     data.setWatched(true);
                 }else{
-                    viewHolder.parent.setBackgroundColor(Color.WHITE);
+                    viewHolder.watched.setChecked(false);
                     data.setWatched(false);
                 }
                 MoviesDbDAO.updateFavorite(data);
@@ -74,10 +73,12 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textTitle;
         View parent;
+        CheckBox watched;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textTitle = itemView.findViewById(R.id.text_title);
             parent = itemView.findViewById(R.id.parent);
+            watched = itemView.findViewById(R.id.checkbox_watched);
         }
     }
 }
