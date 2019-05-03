@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieApiDao;
 import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieOverview;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     MoviesListAdapter listAdapter;
     RecyclerView recyclerView;
     Context context;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         buttonSearch = findViewById(R.id.button_search);
         buttonFavorites = findViewById(R.id.button_favorites);
         editSearch = findViewById(R.id.edit_search);
+        progressBar = findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.GONE);
         context = this;
         movies = new ArrayList<>();
         listAdapter = new MoviesListAdapter(movies);
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 movies.clear();
                 final String searchQuery = editSearch.getText().toString();
+                progressBar.setVisibility(View.VISIBLE);
 
                 new Thread(new Runnable() {
                     @Override
@@ -54,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                             public void run() {
                                 movies.addAll(queryResults);
                                 listAdapter.notifyDataSetChanged();
+                                progressBar.setVisibility(View.GONE);
                             }
                         });
                     }

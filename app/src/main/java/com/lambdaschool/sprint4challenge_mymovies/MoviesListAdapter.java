@@ -32,17 +32,25 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         final MovieOverview data = dataList.get(i);
         viewHolder.parent.setBackgroundColor(Color.WHITE);
+        MoviesDbDAO.InitializeInstance(viewHolder.parent.getContext());
+        final FavoriteMovie favoriteMovie = MoviesDbDAO.getFavoriteByTitle(data.getTitle());
+        if(favoriteMovie != null){
+            viewHolder.parent.setBackgroundColor(Color.CYAN);
+        }
 
         viewHolder.textTitle.setText(data.getTitle());
 
         viewHolder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewHolder.parent.setBackgroundColor(Color.CYAN);
-                MoviesDbDAO.InitializeInstance(viewHolder.parent.getContext());
-                if(MoviesDbDAO.getFavoriteByTitle(data.getTitle()) == null){
-                    FavoriteMovie favoriteMovie = new FavoriteMovie(data.getTitle(), 1, 0);
-                    MoviesDbDAO.AddFavorite(favoriteMovie);
+                if (favoriteMovie == null) {
+                    viewHolder.parent.setBackgroundColor(Color.CYAN);
+                    FavoriteMovie newFavorite = new FavoriteMovie(data.getTitle(), 1, 0);
+                    MoviesDbDAO.AddFavorite(newFavorite);
+                } else {
+                    viewHolder.parent.setBackgroundColor(Color.WHITE);
+                    favoriteMovie.setFavorite(false);
+                    MoviesDbDAO.updateFavorite(favoriteMovie);
                 }
 
             }
@@ -57,6 +65,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textTitle;
         View parent;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textTitle = itemView.findViewById(R.id.text_title);
