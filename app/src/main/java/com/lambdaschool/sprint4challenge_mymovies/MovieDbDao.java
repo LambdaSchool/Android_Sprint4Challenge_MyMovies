@@ -44,10 +44,39 @@ public class MovieDbDao {
             FavoriteMovie favoriteMovie = new FavoriteMovie(cursor.getString(index));
             index = cursor.getColumnIndexOrThrow(MovieDbContract.COLUMN_NAME_WATCHED);
             favoriteMovie.setWatched(1==cursor.getInt(index)); //1== sets boolean to 1 if the int returned from the cursor is 1
+            index = cursor.getColumnIndexOrThrow(MovieDbContract._ID);
+            favoriteMovie.setId(cursor.getInt(index));
             favoriteMovies.add(favoriteMovie);
         }
         cursor.close();
         return favoriteMovies;
+    }
+
+    public static void editFavoriteMovie(FavoriteMovie favoriteMovie) {
+        int isWatched = favoriteMovie.isWatched() ? 1 : 0; //sets up the integer for the Db
+        String whereString = MovieDbContract._ID + " = " + favoriteMovie.getId() + ";";
+
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MovieDbContract.COLUMN_NAME_WATCHED, isWatched);
+
+        int rowsAffected = db.update(MovieDbContract.TABLE_NAME, contentValues, whereString, null);
+
+        if (rowsAffected < 1) {
+            Log.e(TAG, "Error updating this movie.");
+        } else if (rowsAffected > 1) {
+            Log.e(TAG, "Error: updated more than 1 movie.");
+
+        }
+
+    }
+
+    public static void deleteFavoriteMovie(FavoriteMovie favoriteMovie) {
+        int rowsAffected = db.delete(MovieDbContract.TABLE_NAME, MovieDbContract._ID + " = ?;", new String[]{String.valueOf(favoriteMovie.getId())});
+
+        if (rowsAffected < 1) {
+            Log.e(TAG, String.format("Movie #%d couldn't be DELETED.", favoriteMovie.getId()));
+        }
     }
 
 

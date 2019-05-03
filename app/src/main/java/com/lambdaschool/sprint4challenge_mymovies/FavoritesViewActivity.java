@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class FavoritesViewActivity extends AppCompatActivity implements View.OnClickListener {
+public class FavoritesViewActivity extends AppCompatActivity {
 
     ArrayList<FavoriteMovie> favoriteMovies;
     Context                  context;
@@ -25,10 +25,30 @@ public class FavoritesViewActivity extends AppCompatActivity implements View.OnC
 
         favoriteMovies = MovieDbDao.getFavoriteMovies();
 
-        for (FavoriteMovie favoriteMovie : favoriteMovies) {
-            TextView textView = new TextView(context);
+        for (final FavoriteMovie favoriteMovie : favoriteMovies) {
+            final TextView textView = new TextView(context);
             textView.setText(favoriteMovie.getName());
-            textView.setOnClickListener(this);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    favoriteMovie.setWatched(!favoriteMovie.isWatched());
+                    MovieDbDao.editFavoriteMovie(favoriteMovie);
+                    if (!favoriteMovie.isWatched()) {
+                        textView.setTypeface(Typeface.DEFAULT_BOLD);
+                    } else {
+                        textView.setTypeface(Typeface.DEFAULT);
+                    }
+                }
+            });
+            textView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    MovieDbDao.deleteFavoriteMovie(favoriteMovie);
+                    favoritesLinearLayout.removeView(textView);
+                    return true;
+                }
+            });
             if (!favoriteMovie.isWatched()) {
                 textView.setTypeface(Typeface.DEFAULT_BOLD);
             }
@@ -37,8 +57,5 @@ public class FavoritesViewActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    @Override
-    public void onClick(View v) {
 
-    }
 }

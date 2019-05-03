@@ -2,6 +2,7 @@ package com.lambdaschool.sprint4challenge_mymovies;
 
 public class FavoriteMovie {
     private String name;
+    private int id;
     private boolean Watched;
 
     public FavoriteMovie(String name) {
@@ -23,5 +24,13 @@ public class FavoriteMovie {
 
     public void setWatched(boolean watched) {
         Watched = watched;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
