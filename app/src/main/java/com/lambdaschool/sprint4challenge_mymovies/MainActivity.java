@@ -1,6 +1,7 @@
 package com.lambdaschool.sprint4challenge_mymovies;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     Button buttonSearch;
+    Button buttonFavorites;
     EditText editSearch;
     ArrayList<MovieOverview> movies;
     MoviesListAdapter listAdapter;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         buttonSearch = findViewById(R.id.button_search);
+        buttonFavorites = findViewById(R.id.button_favorites);
         editSearch = findViewById(R.id.edit_search);
         context = this;
         movies = new ArrayList<>();
@@ -57,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
                 }).start();
 
 
+            }
+        });
+
+        buttonFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, FavoritesActivity.class));
             }
         });
     }
