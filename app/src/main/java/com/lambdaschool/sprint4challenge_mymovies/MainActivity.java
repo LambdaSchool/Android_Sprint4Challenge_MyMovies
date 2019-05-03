@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        allMovies.clear();
                         allMovies.addAll(MovieApiDao.searchMovies(searchEntry));
                         int i = 0;
                         runOnUiThread(new Runnable() {
