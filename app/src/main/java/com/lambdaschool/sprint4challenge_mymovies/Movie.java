@@ -31,6 +31,16 @@ public class Movie  {
 
     private int iID;
     private MovieOverview movieOverview;
+    private boolean bFavorite;
+
+    public boolean isbFavorite() {
+        return bFavorite;
+    }
+
+    public void setbFavorite(boolean bFavorite) {
+        this.bFavorite = bFavorite;
+    }
+
     private boolean bWatched;
 
     public Movie(int iID, MovieOverview movieOverview, boolean bWatched) {

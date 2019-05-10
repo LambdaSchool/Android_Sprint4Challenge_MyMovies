@@ -12,10 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lambdaschool.sprint4challenge_mymovies.SQL.FavoriteMovieSQLDAO;
+
 public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.ViewHolder>{
 
     private ViewHolder viewHolder;
 
+    private FavoriteMovieSQLDAO sqlDAO;
 
 
     public static final int EDIT_ENTRY_REQUEST_CODE = 2;
@@ -42,7 +45,7 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context=viewGroup.getContext();
-
+        sqlDAO=new FavoriteMovieSQLDAO( context ) ;
 
         View entryView = LayoutInflater.from(context).inflate( R.layout.image_list_view, viewGroup, false);
 
@@ -72,7 +75,7 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
             viewHolder.tvYear.setText(Integer.toString( it.getiID())+"("+it.getMovieOverview().getRelease_date().substring( 0,4 )+")");
 
         }
-        if(it.isbWatched()){
+        if(it.isbFavorite()){
             viewHolder.parent.setBackgroundColor( Color.RED );
         }else{
             viewHolder.parent.setBackgroundColor( Color.WHITE );
@@ -92,14 +95,15 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
 
 
         if(item!=null){
-            if(item.isbWatched()){
+            if(item.isbFavorite()){
              //   vh.tvName.setBackgroundColor(Color.WHITE);
                vh.parent.setBackgroundColor(Color.WHITE);
             //   vh.tvName.setBackgroundColor( Color.YELLOW);//debug purpose
             //   vh.tvName.setTextColor( Color.BLACK ); //it repeats every 14 rows somehow
 
             //      vh.tvName.append( item.getMovieOverview().getTitle() );//debug
-                item.setbWatched( false );
+                item.setbFavorite(  false );
+                sqlDAO.delete(item) ;
             }else{
              //   vh.tvName.setBackgroundColor(Color.RED);
                 vh.parent.setBackgroundColor(Color.RED);
@@ -109,7 +113,8 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
 
          //       vh.tvName.append( item.getStrName() );//debug
 
-                item.setbWatched(  true );
+                item.setbFavorite(  true );
+                sqlDAO.add(item);
             }
         }else {
         }

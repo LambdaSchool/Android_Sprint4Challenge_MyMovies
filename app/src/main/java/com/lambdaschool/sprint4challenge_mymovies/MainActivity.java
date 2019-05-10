@@ -10,9 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 
+import com.lambdaschool.sprint4challenge_mymovies.SQL.FavoriteMovieSQLDAO;
+
 public class MainActivity extends AppCompatActivity {
     private MoviesList moviesList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

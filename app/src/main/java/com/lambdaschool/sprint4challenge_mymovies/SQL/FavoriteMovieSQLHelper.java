@@ -13,6 +13,11 @@ public class FavoriteMovieSQLHelper extends SQLiteOpenHelper {
     private static final int    DATABASE_VERSION = 1;
     private static final String DATABASE_NAME    = "FavoriteMovieSQL.db";
 
+    public FavoriteMovieSQLHelper(Context context) {
+        super( context, DATABASE_NAME,null,DATABASE_VERSION );
+    }
+
+
     public FavoriteMovieSQLHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super( context, name, factory, version );
     }
