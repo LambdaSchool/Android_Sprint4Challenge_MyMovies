@@ -91,7 +91,7 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
     private void changeBackGroundColorAndCheckData(ViewHolder vh,int positiom){
 
         String str=vh.tvName.getText().toString();
-        Movie item=itemsList.findByTitle( str );
+        final Movie item=itemsList.findByTitle( str );
 
 
         if(item!=null){
@@ -103,7 +103,13 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
 
             //      vh.tvName.append( item.getMovieOverview().getTitle() );//debug
                 item.setbFavorite(  false );
-                sqlDAO.delete(item) ;
+                new Thread( new Runnable() {
+                    @Override
+                    public void run() {
+                        sqlDAO.delete(item) ;
+                    }
+                } ).start();
+
             }else{
              //   vh.tvName.setBackgroundColor(Color.RED);
                 vh.parent.setBackgroundColor(Color.RED);
@@ -114,7 +120,13 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
          //       vh.tvName.append( item.getStrName() );//debug
 
                 item.setbFavorite(  true );
-                sqlDAO.add(item);
+                new Thread( new Runnable() {
+                    @Override
+                    public void run() {
+                        sqlDAO.add(item);
+                    }
+                } ).start();
+
             }
         }else {
         }

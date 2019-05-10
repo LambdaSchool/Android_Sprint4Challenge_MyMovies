@@ -41,6 +41,7 @@ public class MoviesList {
         return aliMovies.size();
     }
 
+
     public Movie get(int iIndex) {
         movieCurrent = aliMovies.get( iIndex );
         return movieCurrent;
@@ -75,11 +76,11 @@ public class MoviesList {
 
     public MoviesList getMoviesByTitle(String strName){
         ArrayList<MovieOverview> almResult;
-                almResult=movieApiDao.searchMovies(strName);
+        almResult=movieApiDao.searchMovies(strName);
         for(int i=0;i<almResult.size();i++){
 
 
-            aliMovies.add( new Movie(i,almResult.get( i ),false));
+            aliMovies.add( new Movie(almResult.get( i ),false));
 
         }
         return this;

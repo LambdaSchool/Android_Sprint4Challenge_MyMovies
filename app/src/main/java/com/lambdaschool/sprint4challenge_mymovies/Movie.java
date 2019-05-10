@@ -9,6 +9,7 @@ public class Movie  {
     private boolean bFavorite,bWatched;
 
     public Movie(String strTitle,int iYear){
+        iID=(int)System.currentTimeMillis();
         movieOverview=new MovieOverview(strTitle,  Integer.toString( iYear));
 
         bFavorite=true;
@@ -65,7 +66,7 @@ public class Movie  {
     }
 
     public Movie(MovieOverview movieOverview, boolean bWatched) {
-        this.iID = (int)System.currentTimeMillis();
+        this.iID = movieOverview.getId();
         this.movieOverview = movieOverview;
         this.bWatched = bWatched;
     }
