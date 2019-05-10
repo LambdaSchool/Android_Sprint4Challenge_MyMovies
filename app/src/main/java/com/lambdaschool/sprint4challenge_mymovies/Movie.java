@@ -4,6 +4,24 @@ import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieOverview;
 
 
 public class Movie  {
+    private int iID;
+    private MovieOverview movieOverview;
+    private boolean bFavorite,bWatched;
+
+    public Movie(String strTitle,int iYear){
+        movieOverview=new MovieOverview(strTitle,  Integer.toString( iYear));
+
+        bFavorite=true;
+        bWatched=false;
+    }
+
+    public Movie(int id,String strTitle,int iYear,boolean bWatched){
+        iID=id;
+        movieOverview=new MovieOverview(strTitle,  Integer.toString( iYear));
+
+        bFavorite=true;
+        this.bWatched=bWatched;
+    }
     public int getiID() {
         return iID;
     }
@@ -29,9 +47,7 @@ public class Movie  {
     }
 
 
-    private int iID;
-    private MovieOverview movieOverview;
-    private boolean bFavorite;
+
 
     public boolean isbFavorite() {
         return bFavorite;
@@ -41,7 +57,6 @@ public class Movie  {
         this.bFavorite = bFavorite;
     }
 
-    private boolean bWatched;
 
     public Movie(int iID, MovieOverview movieOverview, boolean bWatched) {
         this.iID = iID;

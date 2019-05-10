@@ -74,7 +74,8 @@ public class MoviesList {
     private MovieApiDao movieApiDao=new MovieApiDao();
 
     public MoviesList getMoviesByTitle(String strName){
-        ArrayList<MovieOverview> almResult=movieApiDao.searchMovies(strName);
+        ArrayList<MovieOverview> almResult;
+                almResult=movieApiDao.searchMovies(strName);
         for(int i=0;i<almResult.size();i++){
 
 
@@ -83,8 +84,12 @@ public class MoviesList {
         }
         return this;
     }
-    private void add(String strTitel){
-        
+    public  void add(Movie movie){
+        this.aliMovies.add( movie );
+
+    }
+    public  void remove(Movie movie){
+        this.aliMovies.remove( movie );
     }
 
 

@@ -67,7 +67,11 @@ public class NetworkAdapter {
         } catch (IOException e) {
             e.printStackTrace();
             result = e.getMessage();
-        } finally {
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        result = e.getMessage();
+    } finally {
             if(connection != null) {
                 connection.disconnect();
             }

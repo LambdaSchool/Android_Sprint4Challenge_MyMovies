@@ -2,6 +2,8 @@ package com.lambdaschool.sprint4challenge_mymovies;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
+import com.lambdaschool.sprint4challenge_mymovies.SQL.FavoriteMovieSQLContract;
+import com.lambdaschool.sprint4challenge_mymovies.SQL.FavoriteMovieSQLDAO;
+import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieApiDao;
+
 public class FavoritesViewActivity extends AppCompatActivity {
     Context context;
 
@@ -18,20 +24,35 @@ public class FavoritesViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_favorites_view );
-        context=getApplicationContext();
-        MoviesList moviesList=new MoviesList();
-        moviesList=moviesList.getMoviesByTitle("starwars");
-        final ImageListAdapter ilaAdapter=new ImageListAdapter( moviesList );
-        RecyclerView recyclerViewChoosen=findViewById( R.id.recycler_view_choosen);
-        recyclerViewChoosen.setAdapter( ilaAdapter );
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager( context );
-        linearLayoutManager.setOrientation( LinearLayoutManager.VERTICAL );
-        recyclerViewChoosen.setLayoutManager( linearLayoutManager );
+        new Thread( new Runnable() {
+
+            Handler handler=new Handler();
+            @Override
+            public void run() {
+                context=getApplicationContext();
+
+                FavoriteMovieSQLDAO sqlDAO=new FavoriteMovieSQLDAO(context);
+                MoviesList moviesList =sqlDAO.getAllSQL();
 
 
+                Movie mv=new Movie( "test",2019 );
+                moviesList.add(mv);
+
+                final FavoriteViewAdapter ilaAdapter=new FavoriteViewAdapter(  moviesList );
+                handler.post( new Runnable() {
+                    @Override
+                    public void run() {
+                        RecyclerView recyclerViewChoosen = findViewById( R.id.recycler_viewFavorite );
+                        recyclerViewChoosen.setAdapter( ilaAdapter );
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager( context );
+                        linearLayoutManager.setOrientation( LinearLayoutManager.VERTICAL );
+                        recyclerViewChoosen.setLayoutManager( linearLayoutManager );
+                    }
+
+                });
+            }
+
+        });
     }
-
-
-
 
 }

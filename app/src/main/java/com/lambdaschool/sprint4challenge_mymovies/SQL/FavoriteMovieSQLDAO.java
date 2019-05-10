@@ -2,9 +2,14 @@ package com.lambdaschool.sprint4challenge_mymovies.SQL;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.lambdaschool.sprint4challenge_mymovies.Movie;
+import com.lambdaschool.sprint4challenge_mymovies.MoviesList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FavoriteMovieSQLDAO {
     private SQLiteDatabase db;
@@ -22,6 +27,18 @@ public class FavoriteMovieSQLDAO {
 
     public void setDb(SQLiteDatabase db) {
         this.db = db;
+    }
+
+    public MoviesList getAllSQL(){
+        final Cursor cursor = db.rawQuery("SELECT * FROM " + FavoriteMovieSQLContract.MovieFavorite.TABLE_NAME,
+                new String[]{});
+        MoviesList ml=new MoviesList(  );
+
+        while (cursor.moveToNext()) {
+            ml.add(getMovieFromCursor( cursor));
+        }
+        cursor.close();
+        return ml;
     }
 
     public void add(Movie movie){
@@ -49,5 +66,23 @@ public class FavoriteMovieSQLDAO {
         }
         values.put(FavoriteMovieSQLContract.MovieFavorite.COLUMN_NAME_WATCHED, movie.isbWatched());
         return values;
+    }
+
+    private Movie getMovieFromCursor(Cursor cursor) {
+        int index = cursor.getColumnIndexOrThrow( FavoriteMovieSQLContract.MovieFavorite._ID);
+        int id    = cursor.getInt(index);
+
+        index = cursor.getColumnIndexOrThrow(FavoriteMovieSQLContract.MovieFavorite.COLUMN_NAME_TITLE);
+        String strTitle = cursor.getString(index);
+
+        index = cursor.getColumnIndexOrThrow(FavoriteMovieSQLContract.MovieFavorite.COLUMN_NAME_YEAR);
+        int iYear = cursor.getInt(index);
+
+        index = cursor.getColumnIndexOrThrow(FavoriteMovieSQLContract.MovieFavorite.COLUMN_NAME_WATCHED);
+        boolean bWatched;
+        if (cursor.getInt( index )==0) bWatched = false;
+        else bWatched = true;
+
+        return new Movie( id, strTitle, iYear, bWatched );
     }
 }

@@ -15,7 +15,7 @@ public class FavoriteMovieSQLContract {
                 _ID + " INTEGER PRIMARY KEY," +
                 COLUMN_NAME_TITLE + " TEXT," +
                 COLUMN_NAME_YEAR + " INTEGER," +
-                COLUMN_NAME_WATCHED + " INTEGER" +
+                COLUMN_NAME_WATCHED + " BOOLEAN" +
 
                 "  );";
         public static final String SQL_DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;

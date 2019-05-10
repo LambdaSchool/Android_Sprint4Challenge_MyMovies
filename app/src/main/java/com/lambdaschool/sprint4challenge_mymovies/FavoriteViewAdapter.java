@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,7 +15,7 @@ import android.widget.TextView;
 import com.lambdaschool.sprint4challenge_mymovies.SQL.FavoriteMovieSQLDAO;
 
 public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapter.ViewHolder>{
-
+    static float xx;
 
     private FavoriteViewAdapter.ViewHolder viewHolder;
 
@@ -49,26 +50,26 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
 
 
         if(item!=null){
-            if(item.isbFavorite()){
+            if(item.isbWatched()){
                 //   vh.tvName.setBackgroundColor(Color.WHITE);
                 vh.parent.setBackgroundColor(Color.WHITE);
                 //   vh.tvName.setBackgroundColor( Color.YELLOW);//debug purpose
                 //   vh.tvName.setTextColor( Color.BLACK ); //it repeats every 14 rows somehow
 
                 //      vh.tvName.append( item.getMovieOverview().getTitle() );//debug
-                item.setbFavorite(  false );
-                sqlDAO.delete(item) ;
+                item.setbWatched(   false );
+
             }else{
                 //   vh.tvName.setBackgroundColor(Color.RED);
-                vh.parent.setBackgroundColor(Color.RED);
+                vh.parent.setBackgroundColor(Color.GRAY);
                 //   vh.tvName.setTextColor( Color.WHITE );//it repeats every 14 rows somehow
 
                 //   vh.tvName.setBackgroundColor( Color.BLUE); //debug purpose
 
                 //       vh.tvName.append( item.getStrName() );//debug
 
-                item.setbFavorite(  true );
-                sqlDAO.add(item);
+                item.setbWatched(   true );
+
             }
         }else {
         }
@@ -100,6 +101,30 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
         this.viewHolder=viewHolder;
 
         viewHolder.tvName.setText(it.getMovieOverview().getTitle());
+        viewHolder.itemView.setOnTouchListener( new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        xx = (int) event.getX();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        float deltaX = event.getX() - xx;
+                        if(deltaX>500) {
+                            itemsList.remove( it);
+
+                            return true;
+                        }
+                        break;
+                }
+                return false;
+            }
+        } );
         if(it.getMovieOverview().getRelease_date().equals("")){
             viewHolder.tvYear.setText(Integer.toString( it.getiID())+"(unknown)");
 
@@ -107,8 +132,8 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
             viewHolder.tvYear.setText(Integer.toString( it.getiID())+"("+it.getMovieOverview().getRelease_date().substring( 0,4 )+")");
 
         }
-        if(it.isbFavorite()){
-            viewHolder.parent.setBackgroundColor( Color.RED );
+        if(it.isbWatched()){
+            viewHolder.parent.setBackgroundColor( Color.GRAY );
         }else{
             viewHolder.parent.setBackgroundColor( Color.WHITE );
         }
