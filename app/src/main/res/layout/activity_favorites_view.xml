@@ -6,7 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".FavoritesViewActivity">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_viewFavorite"
+        android:layout_width="394dp"
+        android:layout_height="match_parent">
 
+
+    </android.support.v7.widget.RecyclerView>
 
 
 

@@ -83,7 +83,9 @@ public class MoviesList {
         }
         return this;
     }
-
+    private void add(String strTitel){
+        
+    }
 
 
 /*    public String getStringAllIndex(){
