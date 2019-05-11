@@ -10,11 +10,16 @@ import android.support.annotation.RequiresApi;
 
 
 public class FavoriteMovieSQLHelper extends SQLiteOpenHelper {
-    private static final int    DATABASE_VERSION = 1;
+    private static final int    DATABASE_VERSION = 2;
     private static final String DATABASE_NAME    = "FavoriteMovieSQL.db";
 
     public FavoriteMovieSQLHelper(Context context) {
         super( context, DATABASE_NAME,null,DATABASE_VERSION );
+
+    }
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL( FavoriteMovieSQLContract.MovieFavorite.SQL_CREATE_TABLE );
     }
 
 
@@ -32,14 +37,22 @@ public class FavoriteMovieSQLHelper extends SQLiteOpenHelper {
     }
 
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
 
-
-    }
-
+    /*    @Override
+        public void onCreate(SQLiteDatabase db) {
+            db.execSQL( FavoriteMovieSQLContract.MovieFavorite.SQL_CREATE_TABLE );
+        }
+    */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL( FavoriteMovieSQLContract.MovieFavorite.SQL_DELETE_TABLE );
+        onCreate( db );
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        super.onDowngrade( db, oldVersion, newVersion );
 
     }
+
 }

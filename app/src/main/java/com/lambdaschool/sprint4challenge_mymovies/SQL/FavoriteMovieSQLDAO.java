@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.view.MotionEventCompat;
 
 import com.lambdaschool.sprint4challenge_mymovies.Movie;
 import com.lambdaschool.sprint4challenge_mymovies.MoviesList;
@@ -16,7 +17,8 @@ public class FavoriteMovieSQLDAO {
 
     public FavoriteMovieSQLDAO(Context context) {
         FavoriteMovieSQLHelper dbHelper=new FavoriteMovieSQLHelper( context );
-        this.db = dbHelper.getWritableDatabase();
+        db=dbHelper.getWritableDatabase();
+
     }
     public FavoriteMovieSQLDAO(SQLiteDatabase db) {
         this.db = db;
@@ -43,14 +45,31 @@ public class FavoriteMovieSQLDAO {
 
     public void add(Movie movie){
         ContentValues values = getContentValues(movie);
+
+
         final long insert = db.insert(FavoriteMovieSQLContract.MovieFavorite.TABLE_NAME, null, values);
 
+        System.out.printf( String.valueOf( insert ) );
+        return;
     }
 
     public void delete(Movie movie){
+
         int affectedRows = db.delete(FavoriteMovieSQLContract.MovieFavorite.TABLE_NAME,
                 FavoriteMovieSQLContract.MovieFavorite._ID + "=?",
                 new String[]{Integer.toString(movie.getiID())});
+
+        System.out.printf( String.valueOf( affectedRows ) );
+        return;
+    }
+
+    public void update(Movie movie){
+        int affectedRows = db.update(
+                FavoriteMovieSQLContract.MovieFavorite.TABLE_NAME,
+                getContentValues(movie),
+                FavoriteMovieSQLContract.MovieFavorite._ID + "=?",  //id=1
+                new String[]{Integer.toString(movie.getiID())});
+
     }
 
     private ContentValues getContentValues(Movie movie) {

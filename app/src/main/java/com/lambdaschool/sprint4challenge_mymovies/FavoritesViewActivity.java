@@ -34,10 +34,6 @@ public class FavoritesViewActivity extends AppCompatActivity {
                 FavoriteMovieSQLDAO sqlDAO=new FavoriteMovieSQLDAO(context);
                 MoviesList moviesList =sqlDAO.getAllSQL();
 
-
-                Movie mv=new Movie( "test",2019 );
-                moviesList.add(mv);
-
                 final FavoriteViewAdapter ilaAdapter=new FavoriteViewAdapter(  moviesList );
                 handler.post( new Runnable() {
                     @Override
@@ -52,7 +48,7 @@ public class FavoritesViewActivity extends AppCompatActivity {
                 });
             }
 
-        });
+        }).start();
     }
 
 }

@@ -58,6 +58,7 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
 
                 //      vh.tvName.append( item.getMovieOverview().getTitle() );//debug
                 item.setbWatched(   false );
+                sqlDAO.update( item );
 
             }else{
                 //   vh.tvName.setBackgroundColor(Color.RED);
@@ -69,7 +70,7 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
                 //       vh.tvName.append( item.getStrName() );//debug
 
                 item.setbWatched(   true );
-
+                sqlDAO.update( item );
             }
         }else {
         }
@@ -116,6 +117,7 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
                     case MotionEvent.ACTION_UP:
                         float deltaX = event.getX() - xx;
                         if(deltaX>500) {
+                            sqlDAO.delete( it );
                             itemsList.remove( it);
 
                             return true;
