@@ -1,6 +1,10 @@
 package com.lambdaschool.sprint4challenge_mymovies;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -12,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -38,9 +43,11 @@ public class FavoritesViewActivity extends AppCompatActivity {
                 final MoviesList moviesList =sqlDAO.getAllSQL();
 
                 final FavoriteViewAdapter ilaAdapter=new FavoriteViewAdapter(  moviesList );
+
                 handler.post( new Runnable() {
                     @Override
                     public void run() {
+
                         RecyclerView recyclerViewChoosen = findViewById( R.id.recycler_viewFavorite );
                         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
                             @Override

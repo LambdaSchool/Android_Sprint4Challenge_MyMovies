@@ -107,10 +107,12 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
 
         viewHolder.tvName.setText(it.getMovieOverview().getTitle());
 
-        if(it.getMovieOverview().getRelease_date().equals("")){
+        if(it.getMovieOverview().getRelease_date().equals("0")){
+            viewHolder.tvYear.setTextSize(14);
             viewHolder.tvYear.setText("(unknown)");
 
         }else{
+            viewHolder.tvYear.setTextSize(20);
             viewHolder.tvYear.setText("("+it.getMovieOverview().getRelease_date().substring( 0,4 )+")");
 
         }
