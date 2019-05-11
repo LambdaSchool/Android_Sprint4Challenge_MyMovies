@@ -72,20 +72,19 @@
 
                 android:id="@+id/textYear"
 
-                android:layout_width="377dp"
+                android:layout_width="83dp"
 
-                android:layout_height="33dp"
+                android:layout_height="35dp"
 
                 android:layout_gravity="center"
 
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
 
                 android:text="xxxx"
-
                 android:textColor="@android:color/black"
                 android:textSize="22sp"
-                app:layout_constraintTop_toBottomOf="@+id/text_name_to_choose"
-                tools:layout_editor_absoluteX="4dp" />
+                app:layout_constraintBaseline_toBaselineOf="@+id/text_name_to_choose"
+                app:layout_constraintStart_toEndOf="@+id/text_name_to_choose" />
 
 
         </android.support.constraint.ConstraintLayout>

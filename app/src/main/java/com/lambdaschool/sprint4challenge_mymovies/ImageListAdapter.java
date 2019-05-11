@@ -69,10 +69,12 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
 
         viewHolder.tvName.setText(it.getMovieOverview().getTitle());
         if(it.getMovieOverview().getRelease_date().equals("")){
-            viewHolder.tvYear.setText(Integer.toString( it.getiID())+"(unknown)");
+          //  viewHolder.tvYear.setText(Integer.toString( it.getiID())+"(unknown)");
+            viewHolder.tvYear.setText( "(unknown)");
 
         }else{
-            viewHolder.tvYear.setText(Integer.toString( it.getiID())+"("+it.getMovieOverview().getRelease_date().substring( 0,4 )+")");
+//            viewHolder.tvYear.setText(Integer.toString( it.getiID())+"("+it.getMovieOverview().getRelease_date().substring( 0,4 )+")");
+            viewHolder.tvYear.setText("("+it.getMovieOverview().getRelease_date().substring( 0,4 )+")");
 
         }
         if(it.isbFavorite()){

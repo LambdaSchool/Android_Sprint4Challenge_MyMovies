@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -79,7 +80,10 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
     }
 
 
-    @NonNull
+
+
+
+        @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context=viewGroup.getContext();
@@ -102,36 +106,12 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
         this.viewHolder=viewHolder;
 
         viewHolder.tvName.setText(it.getMovieOverview().getTitle());
-        viewHolder.itemView.setOnTouchListener( new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
 
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        xx = (int) event.getX();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        float deltaX = event.getX() - xx;
-                        if(deltaX>500) {
-                            sqlDAO.delete( it );
-                            itemsList.remove( it);
-
-                            return true;
-                        }
-                        break;
-                }
-                return false;
-            }
-        } );
         if(it.getMovieOverview().getRelease_date().equals("")){
-            viewHolder.tvYear.setText(Integer.toString( it.getiID())+"(unknown)");
+            viewHolder.tvYear.setText("(unknown)");
 
         }else{
-            viewHolder.tvYear.setText(Integer.toString( it.getiID())+"("+it.getMovieOverview().getRelease_date().substring( 0,4 )+")");
+            viewHolder.tvYear.setText("("+it.getMovieOverview().getRelease_date().substring( 0,4 )+")");
 
         }
         if(it.isbWatched()){
