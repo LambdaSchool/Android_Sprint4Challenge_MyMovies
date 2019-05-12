@@ -21,6 +21,7 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
     private FavoriteViewAdapter.ViewHolder viewHolder;
 
     private FavoriteMovieSQLDAO sqlDAO;
+    private MoviesList moviesListinSQL;
 
 
     public static final int EDIT_ENTRY_REQUEST_CODE = 2;
@@ -34,6 +35,20 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
 
         this.itemsList=itemsList;
 
+    }
+    public FavoriteViewAdapter(final Context context, MoviesList itemsList) {
+        this.context=context;
+        this.itemsList=itemsList;
+        sqlDAO=new FavoriteMovieSQLDAO(context);
+
+        new Thread( new Runnable() {
+            @Override
+            public void run() {
+                sqlDAO=new FavoriteMovieSQLDAO(context);
+                moviesListinSQL=sqlDAO.getAllSQL();;
+
+            }
+        } ).start();
     }
     public void set(MoviesList itemsList){
         this.itemsList=itemsList;

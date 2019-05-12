@@ -58,6 +58,31 @@ public class MoviesList {
         return null;
     }
 
+    public Movie findByTitleAndreleaseDate(String strName,int iYear) {
+
+        for (int i = 0; i < size(); i++) {
+            if (aliMovies.get( i ).getMovieOverview().getTitle().equals( strName )) {
+                String strTempYear=aliMovies.get( i ).getMovieOverview().getRelease_date( );
+                int iTempYear;
+                try{
+                    iTempYear=Integer.parseInt( strTempYear.substring( 0,4));
+                }catch (Exception e){
+                    iTempYear=0;
+                }
+                if(iYear==iTempYear){
+                        movieCurrent = aliMovies.get( i );
+                        return movieCurrent;
+                }else{
+
+
+                }
+
+
+            }
+        }
+        return null;
+    }
+
     public MoviesList reset() {
         for (int i = 0; i < size(); i++) {
             aliMovies.get( i ).setbWatched( false );

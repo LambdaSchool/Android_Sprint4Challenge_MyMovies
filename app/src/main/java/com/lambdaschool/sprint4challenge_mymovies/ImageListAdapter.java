@@ -27,10 +27,25 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
     private Context context;
     private MoviesList itemsList;
 
+    private MoviesList moviesListinSQL;
+    public ImageListAdapter(final Context context, MoviesList itemsList) {
 
+        this.itemsList=itemsList;
+
+        sqlDAO=new FavoriteMovieSQLDAO(context);
+        new Thread( new Runnable() {
+            @Override
+            public void run() {
+                sqlDAO=new FavoriteMovieSQLDAO(context);
+                moviesListinSQL=sqlDAO.getAllSQL();;
+
+            }
+        } ).start();
+    }
     public ImageListAdapter(MoviesList itemsList) {
 
         this.itemsList=itemsList;
+
 
     }
     public void set(MoviesList itemsList){
@@ -45,7 +60,7 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context=viewGroup.getContext();
-        sqlDAO=new FavoriteMovieSQLDAO( context ) ;
+
 
         View entryView = LayoutInflater.from(context).inflate( R.layout.image_list_view, viewGroup, false);
 
@@ -60,29 +75,46 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
 
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
 
-        if(i>56){
-            System.out.printf( "test" );
-        }
         final Movie it = this.itemsList.get(i);
-
+        String strTitle=it.getMovieOverview().getTitle(),
+                strDate=it.getMovieOverview().getRelease_date();
         this.viewHolder=viewHolder;
 
-        viewHolder.tvName.setText(it.getMovieOverview().getTitle());
-        if(it.getMovieOverview().getRelease_date().equals("")){
-          //  viewHolder.tvYear.setText(Integer.toString( it.getiID())+"(unknown)");
+        viewHolder.tvName.setText(strTitle);
+        if(strDate.equals("")){
             viewHolder.tvYear.setTextSize( 14 );
             viewHolder.tvYear.setText( "(unknown)");
-
+            it.getMovieOverview().setRelease_date( "0000" );
         }else{
             viewHolder.tvYear.setTextSize(20);
             viewHolder.tvYear.setText("("+it.getMovieOverview().getRelease_date().substring( 0,4 )+")");
 
         }
         if(it.isbFavorite()){
+
+        }else{
+            int iYear;
+            try{
+                iYear=Integer.parseInt( strDate.substring( 0,4 ));
+            }catch (Exception e){
+                iYear=0;
+            }
+
+            Movie temp=moviesListinSQL.findByTitleAndreleaseDate( strTitle,iYear);
+            if(temp==null){
+
+            }else{
+                it.setbFavorite( true );
+                it.setbWatched(temp.isbWatched() );
+            }
+        }
+
+        if(it.isbFavorite()){
             viewHolder.parent.setBackgroundColor( Color.RED );
         }else{
             viewHolder.parent.setBackgroundColor( Color.WHITE );
         }
+
        // viewHolder.ivImage.setImageDrawable( context.getResources() .getDrawable( it.getMovieOverview().getPoster_path() ));
 
     }
@@ -99,12 +131,8 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
 
         if(item!=null){
             if(item.isbFavorite()){
-             //   vh.tvName.setBackgroundColor(Color.WHITE);
                vh.parent.setBackgroundColor(Color.WHITE);
-            //   vh.tvName.setBackgroundColor( Color.YELLOW);//debug purpose
-            //   vh.tvName.setTextColor( Color.BLACK ); //it repeats every 14 rows somehow
 
-            //      vh.tvName.append( item.getMovieOverview().getTitle() );//debug
                 item.setbFavorite(  false );
                 new Thread( new Runnable() {
                     @Override
@@ -114,13 +142,8 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
                 } ).start();
 
             }else{
-             //   vh.tvName.setBackgroundColor(Color.RED);
                 vh.parent.setBackgroundColor(Color.RED);
-             //   vh.tvName.setTextColor( Color.WHITE );//it repeats every 14 rows somehow
 
-             //   vh.tvName.setBackgroundColor( Color.BLUE); //debug purpose
-
-         //       vh.tvName.append( item.getStrName() );//debug
 
                 item.setbFavorite(  true );
                 new Thread( new Runnable() {

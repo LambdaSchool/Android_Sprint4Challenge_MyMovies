@@ -19,8 +19,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_main);
-
         final Context context=getApplicationContext();
+
+
+
         moviesList=new MoviesList(  );
 
 
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         moviesList.removeAll();
                         moviesList=moviesList.getMoviesByTitle( (( EditText)findViewById( R.id.inputName)).getText().toString());
-                        final ImageListAdapter ilaAdapter=new ImageListAdapter( moviesList );
+                        final ImageListAdapter ilaAdapter=new ImageListAdapter(context, moviesList );
                         handler.post( new Runnable() {
                             @Override
                             public void run() {
