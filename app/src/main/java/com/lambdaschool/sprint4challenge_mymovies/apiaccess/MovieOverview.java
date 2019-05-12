@@ -22,6 +22,11 @@ public class MovieOverview
         this.title=title;
         this.release_date=release_date;
     }
+    public MovieOverview(String title,String release_date,String strPosterPath){
+        this.title=title;
+        this.release_date=release_date;
+        this.poster_path=strPosterPath;
+    }
     public MovieOverview(JSONObject json) {
         try {
             this.vote_average = json.getDouble("vote_average");

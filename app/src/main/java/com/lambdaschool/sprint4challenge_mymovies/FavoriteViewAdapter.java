@@ -1,6 +1,7 @@
 package com.lambdaschool.sprint4challenge_mymovies;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lambdaschool.sprint4challenge_mymovies.SQL.FavoriteMovieSQLDAO;
+import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieApiDao;
 
 public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapter.ViewHolder>{
     static float xx;
@@ -111,7 +113,7 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
 
         if(i>56){
             System.out.printf( "test" );
@@ -119,7 +121,36 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
         final Movie it = this.itemsList.get(i);
 
         this.viewHolder=viewHolder;
+        if(i>8){
+            System.out.printf("8"); //debug
+        }
 
+        this.viewHolder=viewHolder;
+        new Thread( new Runnable() {
+            @Override
+            public void run() {
+                String path=it.getMovieOverview().getPoster_path();
+
+                if(!path.equals( "" )&&!path.equals( "null" )&&path!=null){
+                    Bitmap bitmap= MovieApiDao.getPoster(  it.getMovieOverview().getPoster_path(),1 );
+                    if(!bitmap.equals( "" )) {
+                        try {
+                            viewHolder.ivImage.setImageBitmap(bitmap  );
+                        }catch (Exception e){
+                            System.out.printf(e.toString());
+
+                        }
+
+                    }
+
+                }
+
+
+
+
+
+            }
+        } ).start();
         viewHolder.tvName.setText(it.getMovieOverview().getTitle());
 
         if(it.getMovieOverview().getRelease_date().equals("0")){
@@ -164,7 +195,7 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
             super(itemView);
 
             this.parent = itemView.findViewById( R.id.element_parent);
-
+            this.ivImage=itemView.findViewById( R.id.imageMovie );
             this.tvName= itemView.findViewById( R.id.text_name_to_choose);
             this.tvYear= itemView.findViewById( R.id.textYear);
             // Attach a click listener to the entire row view

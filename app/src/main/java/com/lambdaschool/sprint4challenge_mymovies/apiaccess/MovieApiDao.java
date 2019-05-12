@@ -59,6 +59,11 @@ public final class MovieApiDao {
         return NetworkAdapter.getBitmapFromURL(IMAGE_URL + POSTER_SIZES[6] + imagePath);
     }
 
+    public static Bitmap getPoster(String imagePath,int size) {
+        return NetworkAdapter.getBitmapFromURL(IMAGE_URL + POSTER_SIZES[size] + imagePath);
+    }
+
+
     public static Bitmap getImage(String id) {
         return NetworkAdapter.getBitmapFromURL(IMAGE_URL + id + JPG);
     }

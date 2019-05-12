@@ -7,6 +7,7 @@ public class FavoriteMovieSQLContract {
         public static final String  TABLE_NAME        = "movie",
                                     COLUMN_NAME_TITLE = "title",
                                     COLUMN_NAME_YEAR = "year",
+                                    COLUMN_NAME_POSTERPATH="imagepath",
                                     COLUMN_NAME_WATCHED = "Watched";
 
 
@@ -15,6 +16,7 @@ public class FavoriteMovieSQLContract {
                 _ID + " INTEGER PRIMARY KEY," +
                 COLUMN_NAME_TITLE + " TEXT," +
                 COLUMN_NAME_YEAR + " INTEGER," +
+                COLUMN_NAME_POSTERPATH + " TEXT," +
                 COLUMN_NAME_WATCHED + " BOOLEAN" +
 
                 "  );";

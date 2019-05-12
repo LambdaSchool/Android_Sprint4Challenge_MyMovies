@@ -15,6 +15,13 @@ public class Movie  {
         bFavorite=true;
         bWatched=false;
     }
+    public Movie(int id,String strTitle,int iYear,String strPosterPath, boolean bWatched){
+        iID=id;
+        movieOverview=new MovieOverview(strTitle,  Integer.toString( iYear),strPosterPath);
+
+        bFavorite=true;
+        this.bWatched=bWatched;
+    }
 
     public Movie(int id,String strTitle,int iYear,boolean bWatched){
         iID=id;

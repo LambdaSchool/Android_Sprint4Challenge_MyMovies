@@ -2,7 +2,9 @@ package com.lambdaschool.sprint4challenge_mymovies;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lambdaschool.sprint4challenge_mymovies.SQL.FavoriteMovieSQLDAO;
+import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieApiDao;
+import com.lambdaschool.sprint4challenge_mymovies.apiaccess.NetworkAdapter;
 
 public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.ViewHolder>{
 
@@ -76,10 +81,37 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
 
         final Movie it = this.itemsList.get(i);
+        if(i>8){
+             System.out.printf("8"); //debug
+        }
         String strTitle=it.getMovieOverview().getTitle(),
                 strDate=it.getMovieOverview().getRelease_date();
         this.viewHolder=viewHolder;
+        new Thread( new Runnable() {
+            @Override
+            public void run() {
+                String path=it.getMovieOverview().getPoster_path();
 
+                    if(!path.equals( "" )&&!path.equals( "null" )&&path!=null){
+                        Bitmap bitmap=MovieApiDao.getPoster(  it.getMovieOverview().getPoster_path(),1 );
+                        if(!bitmap.equals( "" )) {
+                            try {
+                                viewHolder.ivImage.setImageBitmap(bitmap  );
+                            }catch (Exception e){
+                                System.out.printf(e.toString());
+
+                            }
+
+                        }
+
+                }
+
+
+
+
+
+            }
+        } ).start();
         viewHolder.tvName.setText(strTitle);
         if(strDate.equals("")){
             viewHolder.tvYear.setTextSize( 14 );
@@ -87,7 +119,12 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
             it.getMovieOverview().setRelease_date( "0000" );
         }else{
             viewHolder.tvYear.setTextSize(20);
-            viewHolder.tvYear.setText("("+it.getMovieOverview().getRelease_date().substring( 0,4 )+")");
+            try {
+                viewHolder.tvYear.setText("("+it.getMovieOverview().getRelease_date().substring( 0,4 )+")");
+
+            }catch (Exception e){
+
+            }
 
         }
         if(it.isbFavorite()){
@@ -175,8 +212,6 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
     class ViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener {
 
         private CardView parent;
-
-
         private ImageView ivImage;
         private TextView tvName,tvYear;
 
@@ -186,7 +221,7 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
             super(itemView);
 
             this.parent = itemView.findViewById( R.id.element_parent);
-
+            this.ivImage=itemView.findViewById( R.id.imageMovie );
             this.tvName= itemView.findViewById( R.id.text_name_to_choose);
             this.tvYear= itemView.findViewById( R.id.textYear);
             // Attach a click listener to the entire row view

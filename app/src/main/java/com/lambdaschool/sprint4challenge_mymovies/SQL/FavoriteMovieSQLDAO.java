@@ -83,6 +83,8 @@ public class FavoriteMovieSQLDAO {
 
             values.put(FavoriteMovieSQLContract.MovieFavorite.COLUMN_NAME_YEAR, Integer.parseInt( movie.getMovieOverview().getRelease_date().substring( 0,4 )));
         }
+        values.put(FavoriteMovieSQLContract.MovieFavorite.COLUMN_NAME_POSTERPATH, movie.getMovieOverview().getPoster_path());
+
         values.put(FavoriteMovieSQLContract.MovieFavorite.COLUMN_NAME_WATCHED, movie.isbWatched());
         return values;
     }
@@ -97,11 +99,14 @@ public class FavoriteMovieSQLDAO {
         index = cursor.getColumnIndexOrThrow(FavoriteMovieSQLContract.MovieFavorite.COLUMN_NAME_YEAR);
         int iYear = cursor.getInt(index);
 
+        index = cursor.getColumnIndexOrThrow(FavoriteMovieSQLContract.MovieFavorite.COLUMN_NAME_POSTERPATH);
+        String strPosterPath = cursor.getString(index);
+
         index = cursor.getColumnIndexOrThrow(FavoriteMovieSQLContract.MovieFavorite.COLUMN_NAME_WATCHED);
         boolean bWatched;
         if (cursor.getInt( index )==0) bWatched = false;
         else bWatched = true;
 
-        return new Movie( id, strTitle, iYear, bWatched );
+        return new Movie( id, strTitle, iYear, strPosterPath, bWatched );
     }
 }
