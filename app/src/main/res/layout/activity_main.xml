@@ -45,6 +45,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonSearch">
 
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_choosen"
             android:layout_width="match_parent"
@@ -54,22 +55,27 @@
         </android.support.v7.widget.RecyclerView>
 
 
+
+
         title_activity_image_list_view
 
     </LinearLayout>
 
     <Button
         android:id="@+id/buttonViewFavorites"
-        android:layout_width="405dp"
-        android:layout_height="39dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/cardview_dark_background"
         android:text="View Favorites"
         android:textColor="@color/cardview_light_background"
         android:textColorHint="#007C1616"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="8dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 

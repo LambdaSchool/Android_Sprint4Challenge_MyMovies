@@ -11,6 +11,7 @@ import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -66,7 +67,10 @@ public class FavoritesViewActivity extends AppCompatActivity {
                                     ilaAdapter.notifyItemRemoved(position);
 
                                     Toast.makeText(getApplicationContext(),id +" has been deleted from this current list",Toast.LENGTH_SHORT).show();
-
+                                    FragmentManager fragmentManager = getSupportFragmentManager();
+                                    fragmentManager.beginTransaction()
+                                            .replace(R.id.frameDetail, DetailViewFragment.newInstance())
+                                            .commit();
                                 }else if(direction == ItemTouchHelper.RIGHT){//swipe right
                                     int id=moviesList.getAliMovies().get( position ).getiID();
                                     sqlDAO.delete( moviesList.getAliMovies().get( position ) );
