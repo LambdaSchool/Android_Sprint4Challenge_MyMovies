@@ -1,16 +1,22 @@
 package com.lambdaschool.sprint4challenge_mymovies;
 
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -151,7 +157,7 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
         }else{
             viewHolder.parent.setBackgroundColor( Color.WHITE );
         }
-
+        setEnterAnimation(viewHolder.parent, i);
        // viewHolder.ivImage.setImageDrawable( context.getResources() .getDrawable( it.getMovieOverview().getPoster_path() ));
 
     }
@@ -236,10 +242,18 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
             if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
 
                 changeBackGroundColorAndCheckData(this,position);
+
             }
         }
 
 
     }
-
+    int lastPosition=0;
+    private void setEnterAnimation(View viewToAnimate, int position) {
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
 }

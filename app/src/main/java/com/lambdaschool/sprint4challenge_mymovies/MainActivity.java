@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(),"No movie found",Toast.LENGTH_SHORT).show();
 
                                 }else {
+                                    Toast.makeText(getApplicationContext(),moviesList.size()+"movies found",Toast.LENGTH_SHORT).show();
+
                                     RecyclerView recyclerViewChoosen = findViewById( R.id.recycler_view_choosen );
                                     recyclerViewChoosen.setAdapter( ilaAdapter );
                                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager( context );

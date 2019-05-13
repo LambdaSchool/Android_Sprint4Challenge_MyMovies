@@ -69,7 +69,7 @@ public class FavoritesViewActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(),id +" has been deleted from this current list",Toast.LENGTH_SHORT).show();
                                     FragmentManager fragmentManager = getSupportFragmentManager();
                                     fragmentManager.beginTransaction()
-                                            .replace(R.id.frameDetail, DetailViewFragment.newInstance())
+                                            .replace(R.id.fragmet_container,new DetailViewFragment() )
                                             .commit();
                                 }else if(direction == ItemTouchHelper.RIGHT){//swipe right
                                     int id=moviesList.getAliMovies().get( position ).getiID();

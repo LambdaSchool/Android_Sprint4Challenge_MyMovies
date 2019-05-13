@@ -1,9 +1,13 @@
 package com.lambdaschool.sprint4challenge_mymovies;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -11,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -129,28 +135,22 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
         new Thread( new Runnable() {
             @Override
             public void run() {
-                String path=it.getMovieOverview().getPoster_path();
+            String path=it.getMovieOverview().getPoster_path();
 
-                if(!path.equals( "" )&&!path.equals( "null" )&&path!=null){
-                    Bitmap bitmap= MovieApiDao.getPoster(  it.getMovieOverview().getPoster_path(),1 );
-                    if(!bitmap.equals( "" )) {
-                        try {
-                            viewHolder.ivImage.setImageBitmap(bitmap  );
-                        }catch (Exception e){
-                            System.out.printf(e.toString());
-
-                        }
+            if(!path.equals( "" )&&!path.equals( "null" )&&path!=null){
+                Bitmap bitmap= MovieApiDao.getPoster(  it.getMovieOverview().getPoster_path(),1 );
+                if(!bitmap.equals( "" )) {
+                    try {
+                        viewHolder.ivImage.setImageBitmap(bitmap  );
+                    }catch (Exception e){
+                        System.out.printf(e.toString());
 
                     }
-
                 }
-
-
-
-
-
+            }
             }
         } ).start();
+
         viewHolder.tvName.setText(it.getMovieOverview().getTitle());
 
         if(it.getMovieOverview().getRelease_date().equals("0")){
@@ -168,7 +168,7 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
             viewHolder.parent.setBackgroundColor( Color.WHITE );
         }
         // viewHolder.ivImage.setImageDrawable( context.getResources() .getDrawable( it.getMovieOverview().getPoster_path() ));
-
+        setEnterAnimation(viewHolder.parent, i);
     }
 
     @Override
@@ -213,7 +213,15 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<FavoriteViewAdapte
             }
         }
 
+    }
 
+    int lastPosition=0;
+    private void setEnterAnimation(View viewToAnimate, int position) {
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 
 }

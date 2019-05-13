@@ -13,8 +13,8 @@ public class DetailViewFragment extends Fragment {
 
     private DetailViewViewModel mViewModel;
 
-    public static DetailViewFragment newInstance() {
-        return new DetailViewFragment();
+    public DetailViewFragment() {
+
     }
 
     @Override
