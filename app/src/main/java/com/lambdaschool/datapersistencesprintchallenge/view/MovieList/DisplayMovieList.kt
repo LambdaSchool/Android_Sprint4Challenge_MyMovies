@@ -1,18 +1,23 @@
-package com.lambdaschool.datapersistencesprintchallenge
+package com.lambdaschool.datapersistencesprintchallenge.view.MovieList
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.lambdaschool.datapersistencesprintchallenge.R
 import com.lambdaschool.datapersistencesprintchallenge.retrofit.ListOfMoviesCallBack.favoriteListOfMovies
+import com.lambdaschool.datapersistencesprintchallenge.room.DataBaseBuilder
+import com.lambdaschool.datapersistencesprintchallenge.room.FavoriteMovie
 import com.lambdaschool.sprint4challenge_mymovies.model.MovieOverview
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class DisplayFavoriteMovieList(val list: ArrayList<MovieOverview>): RecyclerView.Adapter<DisplayFavoriteMovieList.ViewHolder>(){
+class DisplayMovieList(val list: ArrayList<MovieOverview>): RecyclerView.Adapter<DisplayMovieList.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(
+            view
+        )
     }
 
     override fun getItemCount(): Int = list.size
@@ -22,17 +27,11 @@ class DisplayFavoriteMovieList(val list: ArrayList<MovieOverview>): RecyclerView
 
         holder.movieTitle.text = movie.title
         holder.movieRating.text = "Rating: ${movie.vote_average}/10"
-
-        holder.movieItem.setOnLongClickListener {
-            update(movie)
+        holder.movieItem.setOnClickListener {
+            Toast.makeText(it.context, "${movie.title} added to favorites", Toast.LENGTH_SHORT).show()
+            favoriteListOfMovies.add(movie)
+            DataBaseBuilder.addToFavoriteList(FavoriteMovie(movie.title, "Rating: ${movie.vote_average}/10", 0))
         }
-
-    }
-
-    fun update(movie: MovieOverview): Boolean{
-        list.remove(movie)
-        this.notifyDataSetChanged()
-        return true
     }
 
 
