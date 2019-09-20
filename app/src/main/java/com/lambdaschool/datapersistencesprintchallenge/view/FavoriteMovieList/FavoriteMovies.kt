@@ -13,20 +13,26 @@ import com.lambdaschool.datapersistencesprintchallenge.room.FavoriteMovie
 import kotlinx.android.synthetic.main.activity_favorite_movies.*
 import kotlinx.android.synthetic.main.activity_main.*
 
-class FavoriteMovies : AppCompatActivity() {
+class FavoriteMovies : AppCompatActivity(), DataBaseBuilder.UpdateRecycler{
+    override fun update() {
+        adapter?.notifyDataSetChanged()
+    }
 
 
-
+    var adapter: DisplayFavoriteMovieList? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite_movies)
 
+        adapter = DisplayFavoriteMovieList(favoriteListOfMovies)
 
-        DataBaseBuilder.getAllFavoriteMovies()
+        DataBaseBuilder.getAllFavoriteMovies(this)
+
+
 
         recycler_view_favorite.layoutManager = LinearLayoutManager(this)
-        recycler_view_favorite.adapter = DisplayFavoriteMovieList(favoriteListOfMovies)
+        recycler_view_favorite.adapter = adapter
 
 
 

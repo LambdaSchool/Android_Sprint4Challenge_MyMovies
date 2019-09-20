@@ -1,6 +1,7 @@
 package com.lambdaschool.datapersistencesprintchallenge.room
 
 import android.content.Context
+import android.net.sip.SipSession
 import android.os.AsyncTask
 import androidx.room.Room
 import androidx.recyclerview.widget.RecyclerView
@@ -21,8 +22,8 @@ class DataBaseBuilder(context: Context) {
             RemoveMovieTask().execute(movie)
         }
 
-        fun getAllFavoriteMovies(){
-            GetMoviesTask().execute()
+        fun getAllFavoriteMovies(context: Context){
+            GetMoviesTask(context).execute()
         }
     }
 
@@ -50,7 +51,16 @@ class DataBaseBuilder(context: Context) {
         }
     }
 
-    class GetMoviesTask: AsyncTask<Void, Void, List<FavoriteMovie>>(){
+    class GetMoviesTask(context: Context): AsyncTask<Void, Void, List<FavoriteMovie>>(){
+
+        var recyclerCallBack: UpdateRecycler? = null
+
+        init {
+            if (context is UpdateRecycler){
+                recyclerCallBack = context
+            }
+        }
+
         override fun doInBackground(vararg p0: Void?): List<FavoriteMovie> {
             return App.createDataBase?.db?.movieDao()?.getAllFavMovies()!!
         }
@@ -61,10 +71,14 @@ class DataBaseBuilder(context: Context) {
             result?.forEach {
                 favoriteListOfMovies.add(it)
             }
-
+            recyclerCallBack?.update()
 
         }
 
+    }
+
+    interface UpdateRecycler{
+        fun update()
     }
 
 
