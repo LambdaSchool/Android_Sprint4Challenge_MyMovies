@@ -1,10 +1,13 @@
 package com.lambdaschool.datapersistencesprintchallenge
 
 import android.content.Intent
+import android.graphics.Color
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
 import com.lambdaschool.datapersistencesprintchallenge.retrofit.MovieApi
 import com.lambdaschool.sprint4challenge_mymovies.apiaccess.MovieConstants
 import com.lambdaschool.sprint4challenge_mymovies.model.MovieOverview
@@ -13,8 +16,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.ref.WeakReference
 
 class MainActivity : AppCompatActivity(), Callback<MovieSearchResult> {
+    lateinit var viewModel: FavouriteMoviesViewModel
     lateinit var movieService: MovieApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +28,11 @@ class MainActivity : AppCompatActivity(), Callback<MovieSearchResult> {
             movieService=MovieApi.Factory.create()
             getMovieByName(et_movie.text.toString())
         }
+        btn_view_favourites.setOnClickListener {
+            val intent = Intent(this, FavouritesActivity::class.java)
+            startActivity(intent)
+        }
+        viewModel = ViewModelProviders.of(this).get(FavouriteMoviesViewModel::class.java)
     }
     private fun getMovieByName(movieName: String){
         movieService.getMoviesbyName(movieName,MovieConstants.API_KEY_PARAM).enqueue(this)
@@ -31,33 +41,38 @@ class MainActivity : AppCompatActivity(), Callback<MovieSearchResult> {
         if(response.isSuccessful) {
             if (response.body() != null) {
                 var movieList=response.body()?.results
-                
-
-                // layout_list.addView(createTextView(movies?,movies?.id.toString().toInt()))
-
-
+           movieList?.forEach {
+             layout_list.addView(createTextView(it.title,it.id))
+      }
             }
         }
 
     }
-
-
     override fun onFailure(call: Call<MovieSearchResult>, t: Throwable) {
         Toast.makeText(this,"Failed", Toast.LENGTH_SHORT).show()
     }
-    /*fun createTextView(pokemonName: String,pokemonId:Int): TextView {
+    fun createTextView(movieTitle:String,movieId:Int): TextView {
         val view = TextView(this)
-        view.text = "$pokemonName-$pokemonId"
+        view.text = movieTitle
         view.textSize = 24f
-        view.tag=index
-        view.id=pokemonId
+        view.tag=movieId
         view.setOnClickListener {
-            val intent = Intent(this, GetPokemonActivity::class.java)
-            intent.putExtra("POKEMON_ID",pokemonName)
-            startActivity(intent)
+            view.setBackgroundColor(Color.GRAY)
+            val favouriteMovie=FavouriteMovie(movieTitle,false,movieId)
+            CreateAsyncTask(viewModel).execute(favouriteMovie)
         }
-
         return view
-    }*/
+    }
+    class CreateAsyncTask(viewModel: FavouriteMoviesViewModel) : AsyncTask<FavouriteMovie, Void, Unit>() {
+        private val viewModel = WeakReference(viewModel)
+        override fun doInBackground(vararg favouriteMovies:FavouriteMovie?) {
+            if (favouriteMovies.isNotEmpty()) {
+                favouriteMovies[0]?.let {
+                    viewModel.get()?.createFavouriteMovie(it)
+                }
+            }
+        }
+    }
+
 }
 
