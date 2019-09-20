@@ -9,7 +9,7 @@ import com.lambdaschool.datapersistencesprintchallenge.retrofit.ListOfMoviesCall
 import com.lambdaschool.sprint4challenge_mymovies.model.MovieOverview
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class DisplayMovieList(val list: ArrayList<MovieOverview>): RecyclerView.Adapter<DisplayMovieList.ViewHolder>(){
+class DisplayFavoriteMovieList(val list: ArrayList<MovieOverview>): RecyclerView.Adapter<DisplayFavoriteMovieList.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
         return ViewHolder(view)
@@ -22,10 +22,17 @@ class DisplayMovieList(val list: ArrayList<MovieOverview>): RecyclerView.Adapter
 
         holder.movieTitle.text = movie.title
         holder.movieRating.text = "Rating: ${movie.vote_average}/10"
-        holder.movieItem.setOnClickListener {
-            Toast.makeText(it.context, "${movie.title} added to favorites", Toast.LENGTH_SHORT).show()
-            favoriteListOfMovies.add(movie)
+
+        holder.movieItem.setOnLongClickListener {
+            update(movie)
         }
+
+    }
+
+    fun update(movie: MovieOverview): Boolean{
+        list.remove(movie)
+        this.notifyDataSetChanged()
+        return true
     }
 
 

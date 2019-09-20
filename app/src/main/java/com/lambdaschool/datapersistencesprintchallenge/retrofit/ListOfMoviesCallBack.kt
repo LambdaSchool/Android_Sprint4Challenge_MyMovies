@@ -8,7 +8,8 @@ import retrofit2.Response
 
 object ListOfMoviesCallBack : Callback<MovieSearchResult> {
 
-    val listOfMovies = ArrayList<MovieOverview>()
+    var listOfMovies = ArrayList<MovieOverview>()
+    val favoriteListOfMovies = ArrayList<MovieOverview>()
 
     override fun onFailure(call: Call<MovieSearchResult>, t: Throwable) {
         println(t)
