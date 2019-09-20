@@ -28,7 +28,7 @@ object NetworkAdapter {
             connection.doInput = true
             connection.connect()
             val input = connection.inputStream
-            result = BitmapFactory.decodeStream(input)
+           result = BitmapFactory.decodeStream(input)
 
         } catch (e: IOException) {
             e.printStackTrace()
