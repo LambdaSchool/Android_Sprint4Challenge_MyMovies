@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.lambdaschool.datapersistencesprintchallenge.R
-import com.lambdaschool.datapersistencesprintchallenge.retrofit.ListOfMoviesCallBack.favoriteListOfMovies
 import com.lambdaschool.datapersistencesprintchallenge.room.DataBaseBuilder
 import com.lambdaschool.datapersistencesprintchallenge.room.FavoriteMovie
 import com.lambdaschool.sprint4challenge_mymovies.model.MovieOverview
@@ -29,7 +28,6 @@ class DisplayMovieList(val list: ArrayList<MovieOverview>): RecyclerView.Adapter
         holder.movieRating.text = "Rating: ${movie.vote_average}/10"
         holder.movieItem.setOnClickListener {
             Toast.makeText(it.context, "${movie.title} added to favorites", Toast.LENGTH_SHORT).show()
-            favoriteListOfMovies.add(movie)
             DataBaseBuilder.addToFavoriteList(FavoriteMovie(movie.title, "Rating: ${movie.vote_average}/10", 0))
         }
     }

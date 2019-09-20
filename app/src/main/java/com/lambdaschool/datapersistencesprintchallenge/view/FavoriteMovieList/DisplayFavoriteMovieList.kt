@@ -5,10 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lambdaschool.datapersistencesprintchallenge.R
+import com.lambdaschool.datapersistencesprintchallenge.room.DataBaseBuilder
+import com.lambdaschool.datapersistencesprintchallenge.room.FavoriteMovie
 import com.lambdaschool.sprint4challenge_mymovies.model.MovieOverview
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class DisplayFavoriteMovieList(val list: ArrayList<MovieOverview>): RecyclerView.Adapter<DisplayFavoriteMovieList.ViewHolder>(){
+class DisplayFavoriteMovieList(val list: ArrayList<FavoriteMovie>): RecyclerView.Adapter<DisplayFavoriteMovieList.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
         return ViewHolder(
@@ -21,8 +23,8 @@ class DisplayFavoriteMovieList(val list: ArrayList<MovieOverview>): RecyclerView
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = list[position]
 
-        holder.movieTitle.text = movie.title
-        holder.movieRating.text = "Rating: ${movie.vote_average}/10"
+        holder.movieTitle.text = movie.movieTitle
+        holder.movieRating.text = "Rating: ${movie.movieRating}/10"
 
         holder.movieItem.setOnLongClickListener {
             update(movie)
@@ -30,8 +32,9 @@ class DisplayFavoriteMovieList(val list: ArrayList<MovieOverview>): RecyclerView
 
     }
 
-    fun update(movie: MovieOverview): Boolean{
+    fun update(movie: FavoriteMovie): Boolean{
         list.remove(movie)
+        DataBaseBuilder.removeToFavoriteList(movie)
         this.notifyDataSetChanged()
         return true
     }

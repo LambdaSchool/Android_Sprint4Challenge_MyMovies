@@ -11,6 +11,6 @@ interface MovieDao {
     @Insert
     fun addFavMovie(movie: FavoriteMovie)
 
-    @Query("DELETE FROM FavoriteMovie WHERE id = :id")
-    fun deleteFavMovie(id: Int)
+    @Delete
+    fun deleteFavMovie(movie: FavoriteMovie)
 }

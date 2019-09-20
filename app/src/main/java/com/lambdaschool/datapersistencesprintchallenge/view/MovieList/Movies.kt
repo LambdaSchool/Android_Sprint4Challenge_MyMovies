@@ -10,6 +10,7 @@ import com.lambdaschool.datapersistencesprintchallenge.R
 import com.lambdaschool.datapersistencesprintchallenge.retrofit.ListOfMoviesCallBack
 import com.lambdaschool.datapersistencesprintchallenge.retrofit.ListOfMoviesCallBack.listOfMovies
 import com.lambdaschool.datapersistencesprintchallenge.retrofit.MovieRetroFitObject
+import com.lambdaschool.datapersistencesprintchallenge.room.DataBaseBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 
 class Movies : AppCompatActivity() {
@@ -45,6 +46,7 @@ class Movies : AppCompatActivity() {
 
 
         button_favorite_movies.setOnClickListener {
+            DataBaseBuilder.getAllFavoriteMovies()
             startActivity(Intent(this, FavoriteMovies::class.java))
         }
     }
