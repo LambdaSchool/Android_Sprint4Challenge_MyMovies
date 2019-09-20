@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface MovieGetApi {
+interface MovieAPI {
 
     // search/movie?query=Avengers&api_key=359211348348a13a2b996217f7538f45
 

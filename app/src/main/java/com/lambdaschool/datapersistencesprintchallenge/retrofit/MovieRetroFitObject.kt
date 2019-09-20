@@ -14,6 +14,6 @@ object MovieRetroFitObject {
 
 
     fun getListOfMovies(movieName: String): Call<MovieSearchResult>{
-        return retrofit.create(MovieGetApi::class.java).getListOfMovies(movieName)
+        return retrofit.create(MovieAPI::class.java).getListOfMovies(movieName)
     }
 }
