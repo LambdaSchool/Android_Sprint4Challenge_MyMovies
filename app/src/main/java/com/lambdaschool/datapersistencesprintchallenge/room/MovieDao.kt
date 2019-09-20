@@ -8,7 +8,7 @@ interface MovieDao {
     @Query("SELECT * FROM FavoriteMovie")
     fun getAllFavMovies(): List<FavoriteMovie>
 
-    @Insert
+    @Insert()
     fun addFavMovie(movie: FavoriteMovie)
 
     @Delete

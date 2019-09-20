@@ -24,7 +24,7 @@ class DisplayFavoriteMovieList(val list: ArrayList<FavoriteMovie>): RecyclerView
         val movie = list[position]
 
         holder.movieTitle.text = movie.movieTitle
-        holder.movieRating.text = "Rating: ${movie.movieRating}/10"
+        holder.movieRating.text = "${movie.movieRating}"
 
         holder.movieItem.setOnLongClickListener {
             update(movie)

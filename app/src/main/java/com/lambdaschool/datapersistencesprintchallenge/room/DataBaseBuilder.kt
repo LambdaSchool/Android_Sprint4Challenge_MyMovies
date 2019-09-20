@@ -3,8 +3,9 @@ package com.lambdaschool.datapersistencesprintchallenge.room
 import android.content.Context
 import android.os.AsyncTask
 import androidx.room.Room
-import com.lambdaschool.datapersistencesprintchallenge.retrofit.ListOfMoviesCallBack
-import com.lambdaschool.sprint4challenge_mymovies.model.MovieOverview
+import androidx.recyclerview.widget.RecyclerView
+import com.lambdaschool.datapersistencesprintchallenge.view.FavoriteMovieList.FavoriteMovies
+
 
 class DataBaseBuilder(context: Context) {
     companion object {
@@ -38,12 +39,14 @@ class DataBaseBuilder(context: Context) {
      class AddMovieTask: AsyncTask<FavoriteMovie, Void, Unit>(){
          override fun doInBackground(vararg movie: FavoriteMovie?) {
              App.createDataBase?.db?.movieDao()?.addFavMovie(movie[0]!!)
+             val i = 0
          }
      }
 
     class RemoveMovieTask: AsyncTask<FavoriteMovie, Void, Unit>(){
         override fun doInBackground(vararg movie: FavoriteMovie?) {
             App.createDataBase?.db?.movieDao()?.deleteFavMovie(movie[0]!!)
+            val i = 0
         }
     }
 
@@ -52,12 +55,13 @@ class DataBaseBuilder(context: Context) {
             return App.createDataBase?.db?.movieDao()?.getAllFavMovies()!!
         }
 
+
         override fun onPostExecute(result: List<FavoriteMovie>?) {
             super.onPostExecute(result)
             result?.forEach {
                 favoriteListOfMovies.add(it)
-                val i = 0
             }
+
 
         }
 
