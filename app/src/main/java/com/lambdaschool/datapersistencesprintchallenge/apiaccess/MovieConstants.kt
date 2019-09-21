@@ -6,4 +6,5 @@ object MovieConstants {
     const val FIXED_QUERY_PARAMS = "?language=en-US&page=1&include_adult=false"
     const val SEARCH_MOVIES_ENDPOINT = "search/movie$FIXED_QUERY_PARAMS"
     var MOVIE_NAMES = arrayOf("test", "test")
+    var IDS = arrayOf(1,2)
 }
