@@ -11,7 +11,7 @@ class ListRespritory{
 
         fun createView(){
             for (index in 0 until MOVIE_NAMES.size)
-                createList.add(MovieOverview(MOVIE_NAMES[index].toInt(), MOVIE_NAMES[index]))
+                createList.add(MovieOverview(MOVIE_NAMES[index].toInt(), MOVIE_NAMES[index], isVaf = false))
         }
     }
 }
