@@ -19,6 +19,7 @@ import retrofit2.Response
 import java.lang.ref.WeakReference
 
 class MainActivity : AppCompatActivity(), Callback<MovieSearchResult> {
+    var textIsGrey=false
     lateinit var viewModel: FavouriteMoviesViewModel
     lateinit var movieService: MovieApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,10 +57,14 @@ class MainActivity : AppCompatActivity(), Callback<MovieSearchResult> {
         view.text = movieTitle
         view.textSize = 24f
         view.tag=movieId
+
         view.setOnClickListener {
-            view.setBackgroundColor(Color.GRAY)
-            val favouriteMovie=FavouriteMovie(movieTitle,false,movieId)
-            CreateAsyncTask(viewModel).execute(favouriteMovie)
+
+                view.setBackgroundColor(Color.GRAY)
+                val favouriteMovie = FavouriteMovie(movieTitle, false, movieId)
+                CreateAsyncTask(viewModel).execute(favouriteMovie)
+
+
         }
         return view
     }

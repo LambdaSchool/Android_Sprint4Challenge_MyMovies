@@ -15,7 +15,7 @@
 
         <EditText
             android:id="@+id/et_movie"
-            android:layout_width="317dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="Search Movie By Name"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -29,6 +29,13 @@
             android:layout_height="wrap_content"
             android:background="@android:drawable/ic_menu_search"/>
     </LinearLayout>
+    <Button
+        android:id="@+id/btn_view_favourites"
+        android:layout_alignParentBottom="true"
+        android:text="View Favourites"
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,23 +45,14 @@
             <LinearLayout
                 android:id="@+id/layout_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
             </LinearLayout>
-        </ScrollView>
-        <RelativeLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btn_view_favourites"
-                android:layout_alignParentBottom="true"
-                android:text="View Favourites"
-                android:textSize="18sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
 
-        </RelativeLayout>
+
+        </ScrollView>
+
     </LinearLayout>
+
 
 </LinearLayout>

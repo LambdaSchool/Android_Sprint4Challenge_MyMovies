@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_favourites.*
+import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.ref.WeakReference
 
 class FavouritesActivity : AppCompatActivity() {
@@ -31,18 +32,27 @@ class FavouritesActivity : AppCompatActivity() {
         view.text = favouritemovie.title
         view.textSize = 24f
         view.tag=favouritemovie.id
+        if(favouritemovie.watched)
+            view.setBackgroundColor(Color.GRAY)
+        else
+            view.setBackgroundColor(Color.WHITE)
         view.setOnClickListener {
             if(!favouritemovie.watched) {
-                view.setBackgroundColor(Color.GRAY)
-                var favouriteMovie = FavouriteMovie(favouritemovie.title, true, favouritemovie.id)
+                val favouriteMovie = FavouriteMovie(favouritemovie.title, true, favouritemovie.id)
                 UpdateAsyncTask(viewModel).execute(favouriteMovie)
+
             }
-           else if(favouritemovie.watched) {
+          else if(favouritemovie.watched){
                 view.setBackgroundColor(Color.WHITE)
-                var favouriteMovie = FavouriteMovie(favouritemovie.title, false, favouritemovie.id)
+                val favouriteMovie = FavouriteMovie(favouritemovie.title, false, favouritemovie.id)
                 UpdateAsyncTask(viewModel).execute(favouriteMovie)
             }
 
+        }
+        view.setOnLongClickListener {
+
+           DeleteAsyncTask(viewModel).execute(favouritemovie)
+            return@setOnLongClickListener true
         }
         return view
     }
@@ -52,6 +62,16 @@ class FavouritesActivity : AppCompatActivity() {
             if (favourieMovies.isNotEmpty()) {
                 favourieMovies[0]?.let {
                     viewModel.get()?.updateFavouriteMovie(it)
+                }
+            }
+        }
+    }
+    class DeleteAsyncTask(viewModel: FavouriteMoviesViewModel) : AsyncTask<FavouriteMovie, Void, Unit>() {
+        private val viewModel = WeakReference(viewModel)
+        override fun doInBackground(vararg favourieMovies: FavouriteMovie?) {
+            if (favourieMovies.isNotEmpty()) {
+                favourieMovies[0]?.let {
+                    viewModel.get()?.deleteFavouriteMovie(it)
                 }
             }
         }

@@ -20,4 +20,7 @@ class FavouriteMoviesViewModel : ViewModel() {
     fun updateFavouriteMovie(favouriteMovie: FavouriteMovie) {
         repo.updateFavouriteMovie(favouriteMovie)
     }
+    fun deleteFavouriteMovie(favouriteMovie: FavouriteMovie) {
+        repo.deleteFavouriteMovie(favouriteMovie)
+    }
 }
