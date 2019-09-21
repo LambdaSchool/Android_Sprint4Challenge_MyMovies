@@ -12,7 +12,8 @@ class MovieOverview(
     //    val popularity: Float,
     //    val poster_path: String,
     //    val release_date: String,
-        val title: String
+        val title: String,
+        var isVaf: Boolean
        // val isVideo: Boolean,
        // val vote_average: Float,
        // val vote_count: Int
