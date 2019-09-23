@@ -1,13 +1,16 @@
 package com.lambdaschool.datapersistencesprintchallenge.activities
 
-import androidx.appcompat.app.AppCompatActivity
+
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.lambdaschool.datapersistencesprintchallenge.R
 
-class FavsActivity : AppCompatActivity() {
+
+class FavoritesActivity :
+    AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_favs)
+        setContentView(R.layout.activity_favorites)
     }
 }
