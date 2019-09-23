@@ -11,7 +11,7 @@ class MovieSearchResult(val results: List<MovieOverview>)
 
 
 
-@Entity(tableName = "movies")
+
 
 class MovieOverview(
 

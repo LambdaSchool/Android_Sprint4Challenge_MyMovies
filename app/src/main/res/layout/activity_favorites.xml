@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
@@ -12,36 +13,56 @@
 
     tools:context=".activities.FavoritesActivity">
 
-
-
-    <ScrollView
-
-        android:id="@+id/sv_movie_favorites_list"
-
-        android:layout_margin="15dp"
+    <LinearLayout
 
         android:layout_width="match_parent"
 
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
 
+        android:orientation="vertical">
 
+        <TextView
 
-        <LinearLayout
+            android:text="My Favourite Movies"
 
-            android:orientation="vertical"
+            android:textAlignment="center"
 
-            android:id="@+id/sv_ll_movie_favorites_list"
+            android:textSize="36dp"
+
+            android:textStyle="bold"
 
             android:layout_width="match_parent"
 
+            android:layout_height="match_parent"/>
+
+        <ScrollView android:layout_width="match_parent"
+
             android:layout_height="wrap_content">
 
-        </LinearLayout>
+            <LinearLayout
+
+                android:id="@+id/layout_favourite_movie_list"
+
+                android:layout_width="match_parent"
+
+                android:layout_height="match_parent"
+
+                android:orientation="vertical">
+
+                <TextView
+
+                    android:id="@+id/test_text"
+
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
 
 
 
-    </ScrollView>
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

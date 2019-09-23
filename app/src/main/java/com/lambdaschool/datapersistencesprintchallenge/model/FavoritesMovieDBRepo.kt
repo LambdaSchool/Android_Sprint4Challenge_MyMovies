@@ -1,16 +1,14 @@
-package com.lambdaschool.datapersistencesprintchallenge.apiaccess
+package com.lambdaschool.datapersistencesprintchallenge.model
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.room.Database
 import androidx.room.Room
-import com.lambdaschool.datapersistencesprintchallenge.model.FavoriteMovie
-import com.lambdaschool.datapersistencesprintchallenge.model.FavoriteMovieRepoInterface
-
-import com.lambdaschool.datapersistencesprintchallenge.model.FavouriteMovieDB
+import androidx.room.RoomDatabase
+import com.lambdaschool.datapersistencesprintchallenge.MovieDAO.FavoriteMovieDao
 
 
-
-class MovieRespritory(val context: Context) : FavoriteMovieRepoInterface {
+class FavouriteMovieDBRepo(val context: Context) : FavoriteMovieRepoInterface {
 
 
 
